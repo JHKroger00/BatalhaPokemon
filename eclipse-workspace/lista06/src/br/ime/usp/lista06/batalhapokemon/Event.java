@@ -1,10 +1,10 @@
 /*********************************************************/
 /** 						                            **/
-/** Autores: João Henrique de A. Kröger  NUSP: 10770109 **/
+/** Autores: Joï¿½o Henrique de A. Krï¿½ger  NUSP: 10770109 **/
 /**			 Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
-/** Lista 06 - Exercício 01                             **/
+/** Lista 06 - Exercï¿½cio 01                             **/
 /**                                                     **/
 /*********************************************************/
 
