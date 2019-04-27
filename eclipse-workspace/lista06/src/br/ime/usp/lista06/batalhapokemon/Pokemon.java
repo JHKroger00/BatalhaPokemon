@@ -112,6 +112,10 @@ public class Pokemon {
 		
 	}
 	
+	public static Pokemon setPokemon(String name) {
+		//Procura o pokemon na lista, chama o construtor e devolve o pokemon
+	}
+	
 }
 
 class Attack {

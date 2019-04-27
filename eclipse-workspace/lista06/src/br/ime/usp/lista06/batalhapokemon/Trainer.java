@@ -1,10 +1,10 @@
 /*********************************************************/
 /** 						                            **/
-/** Autores: Joï¿½o Henrique de A. Krï¿½ger  NUSP: 10770109 **/
+/** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
 /**			 Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
-/** Lista 06 - Exercï¿½cio 01                             **/
+/** Lista 06 - Exercicio 01                             **/
 /**                                                     **/
 /*********************************************************/
 
@@ -19,16 +19,12 @@ public class Trainer extends Controller {
 	private Pokemon[] pokemon = new Pokemon[6];
 	private int currentPokemon;
 	
-	public Trainer(String name, int id, Pokemon Pokemon1, Pokemon Pokemon2, Pokemon Pokemon3, 
-			        Pokemon Pokemon4, Pokemon Pokemon5, Pokemon Pokemon6) {
+	public Trainer(String name, int id, Pokemon[] Pokemons) {
 		this.name = name;
 		this.id = id;
-		this.pokemon[0] = Pokemon1;
-		this.pokemon[1] = Pokemon2;
-		this.pokemon[2] = Pokemon3;
-		this.pokemon[3] = Pokemon4;
-		this.pokemon[4] = Pokemon5;
-		this.pokemon[5] = Pokemon6;
+		for(int i = 0; i < 6; i++) {
+			this.pokemon[i] = Pokemons[i];
+		}
 	}
 	
 	public String getName() {
@@ -51,9 +47,9 @@ public class Trainer extends Controller {
 		currentPokemon = i;
 	}
 
-	private class Fight extends Event {
-		public static final String name = "f";
-		public static final int priority = 1;
+	class Fight extends Event {
+		public char name = 'f';
+		public int priority = 1;
 		private Attack attack;
 		private int a, damage;
 		private boolean usable = false;
@@ -82,6 +78,7 @@ public class Trainer extends Controller {
 					defender.pokemon[defender.getCurrent()].takeDamage(damage);
 				}
 			}		
+			sc.close();
 		}
 		
 		public String description(Trainer t) {
@@ -91,8 +88,8 @@ public class Trainer extends Controller {
 	}
 	
 	private class Switch extends Event {
-		public static final String name = "s";
-		public static final int priority = 3;
+		public final char name = 's';
+		public final int priority = 3;
 		private int n, p;
 		private boolean usable = false;
 		
@@ -128,6 +125,8 @@ public class Trainer extends Controller {
 					usable = true;
 				}
 			}
+			
+			sc.close();
 		}
 		
 		public String description(Trainer t) {
@@ -136,8 +135,8 @@ public class Trainer extends Controller {
 	}
 	
 	private class Item extends Event {
-		public static final String name = "i";
-		public static final int priority = 2;
+		public final char name = 'i';
+		public final int priority = 2;
 		public int item;
 		
 		public void action(Trainer t) {
@@ -158,6 +157,7 @@ public class Trainer extends Controller {
 				case 3 : Bag.useItem("hyperpotion", pokemon[t.getCurrent()]);
 					break;
 			}
+			sc.close();
 		}
 		
 		public String description(Trainer t) {
@@ -176,8 +176,8 @@ public class Trainer extends Controller {
 	}
 	
 	private class Run extends Event {
-		public static final String name = "r";
-		public static final int priority = 4;
+		public final char name = 'r';
+		public final int priority = 4;
 		
 		public void action(Trainer t) {
 			return;
@@ -188,7 +188,49 @@ public class Trainer extends Controller {
 		}
 	}
 	
-	private class EventSelect extends Event {
+	private class Round extends Event {
+		
+		
+		
+	}
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		Trainer t1, t2;
+		
+		System.out.println("Trainer 1, What's your name ?");
+		String auxName = sc.nextLine();
+		Pokemon[] auxPokemons = new Pokemon[6];
+		
+		for(int i = 0; i < 6; i++) {
+			auxPokemons = null;
+			System.out.println("Trainer 1, choose your " + i + " º pokemon, type none if you don't want"
+					+ "any more pokemons." );
+			
+			String auxPokemonName = sc.nextLine();
+			if(!auxPokemonName.equals("none")) {
+				auxPokemons[i] = (Pokemon).setPokemon(auxPokemonName);
+			}
+		}
+		
+		t1 = new Trainer(auxName, 1, auxPokemons);
+		
+		System.out.println("Trainer 2, What's your name ?");
+		auxName = sc.nextLine();
+		
+		for(int i = 0; i < 6; i++) {
+			auxPokemons[i] = null;
+			System.out.println("Trainer 2, choose your " + i + " º pokemon, type none if you don't want"
+					+ "any more pokemons." );
+			
+			String auxPokemonName = sc.nextLine();
+			if(!auxPokemonName.equals("none")) {
+				auxPokemons[i] = (Pokemon).setPokemon(auxPokemonName); //To Do
+			}
+		}
+		t2 = new Trainer(auxName, 2, auxPokemons);
+		
+		sc.close();
 		
 	}
 }

@@ -16,7 +16,7 @@ class EventSet {
 	
 	public void add(Event e) {
 		if (i >= events.length)
-			return;
+			i = 0;
 		events[i++] = e;
 	}	
 }
@@ -29,7 +29,12 @@ public class Controller {
 	 }  
 	 
 	 public void run(Event e, Trainer t) { 		 
-		 		 e.action(t); 
-				 System.out.println(e.description(t));   
-		 } 
+		 e.action(t); 
+		 System.out.println(e.description(t));   
+	 } 
+	 
+	 public void run(Event e, Trainer t1, Trainer t2 ) {
+		 action(t1, t2);
+		 System.out.println(e.description(t1));
+	 }
 } 
