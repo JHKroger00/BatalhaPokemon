@@ -33,8 +33,4 @@ public class Controller {
 		 System.out.println(e.description(t));   
 	 } 
 	 
-	 public void run(Event e, Trainer t1, Trainer t2 ) {
-		 action(t1, t2);
-		 System.out.println(e.description(t1));
-	 }
 } 
