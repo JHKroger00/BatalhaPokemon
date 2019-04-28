@@ -36,13 +36,17 @@ public class Trainer {
 		Pokemon[] auxPokemons = new Pokemon[6];
 		
 		for(int i = 0; i < 6; i++) {
-			auxPokemons[i] = null;
 			System.out.println(auxName + ", choose your " + i + " º pokemon, type none if you don't want"
 					+ "any more pokemons." );
 			
 			String auxPokemonName = sc.nextLine();
 			if(!auxPokemonName.equals("none")) {
-				auxPokemons[i] = Pokemon.setPokemon(auxPokemonName);
+				auxPokemons[i] = Pokemon.setPokemon(auxPokemonName); // To Do
+			}
+			else {
+				for(int j = i; j < 6; j++)
+					auxPokemons[j] = null; //Criar um tipo de pokemon null
+				break;
 			}
 		}
 		t = new Trainer(auxName, id, auxPokemons);

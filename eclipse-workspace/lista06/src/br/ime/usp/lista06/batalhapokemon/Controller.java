@@ -19,6 +19,8 @@ class EventSet {
 			i = 0;
 		events[i++] = e;
 	}	
+	
+	public 
 }
 
 public class Controller {

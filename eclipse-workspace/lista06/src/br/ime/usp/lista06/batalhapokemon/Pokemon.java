@@ -19,18 +19,17 @@ public class Pokemon {
 	private String type2;
 	private final int maxHP;
 	private int currentHP;
-	private int atk;
-	private int def;
-	private int spatk;
-	private int spdef;
-	private int spe;
+	private final int atk;
+	private final int def;
+	private final int spatk;
+	private final int spdef;
+	private final int spe;
 	public final Attack[] attack = new Attack[4];
 	
-	public Pokemon (String name, String species, int dexNum, String type1, String type2, int HP,
+	public Pokemon (String name, int dexNum, String type1, String type2, int HP,
 					int atk, int def, int spatk, int spdef, int spe, Attack attack1,  Attack attack2,  
 					Attack attack3,  Attack attack4) {
 		this.name = name;
-		this.species = species;
 		this.dexNum = dexNum;
 		this.type1 = type1;
 		this.type2 = type2;
@@ -49,10 +48,6 @@ public class Pokemon {
 	
 	public String getName() {
 		return name; 
-	}
-	
-	public String getSpecies() {
-		return species; 
 	}
 	
 	public int getDexNum() {
@@ -99,12 +94,18 @@ public class Pokemon {
 		return spe;
 	}
 	
-	public int attackPokemon(Attack attack, Pokemon defender) {
+	public int attackPokemon(Attack attack, Pokemon attacker, Pokemon defender) {
 		if (attack.getCategory().equals("p")) {
-			return(((42)*attack.getPower()*((attack.getPower())/(defender.getDef())))/50)+2;
+			int power = attack.getPower();
+			int atk = attacker.getAtk();
+			int def = defender.getDef();
+			return(((42)*power*(atk/def))/50)+2;
 		}
-		return(((42)*attack.getPower()*((attack.getPower())/(defender.getSpDef())))/50)+2;
 		
+		int power = attack.getPower();
+		int spatk = attacker.getAtk();
+		int spdef = defender.getSpDef(); 
+		return(((42)*power*(spatk/spdef))/50)+2;	
 	}
 	
 	public void takeDamage(int damage) {
@@ -154,4 +155,38 @@ class Attack {
 		return priority;
 	}
 	
+	public void hurtsUser(Attack attack, Pokemon attacker, Pokemon defender) {
+		String name = attack.getName();
+		int damage = attacker.attackPokemon(attack, attacker, defender);
+		
+		if(name.equals("TakeDown")) {
+			attacker.takeDamage(damage/4);
+			System.out.println(attacker.getName() + "lost some of its HP due to recoil");
+		}
+		
+		if(name.equals("DoubleEdge")) {
+			attacker.takeDamage(damage/3);
+			System.out.println(attacker.getName() + "lost some of its HP due to recoil");
+		}
+	}
+	
+	public void healsUser(Attack attack, Pokemon attacker, Pokemon defender) {
+		String name = attack.getName();
+		int damage = attacker.attackPokemon(attack, attacker, defender);
+		
+		if(name.equals("Absorb")) {
+			attacker.setCurrentHP(attacker.getCurrentHP()+(damage/2));
+			System.out.println(attacker.getName() + "restored its HP");
+		}
+		
+		if(name.equals("MegaDrain")) {
+			attacker.setCurrentHP(attacker.getCurrentHP()+(damage/2));
+			System.out.println(attacker.getName() + "restored its HP");
+		}
+		
+		if(name.equals("GigaDrain")) {
+			attacker.setCurrentHP(attacker.getCurrentHP()+(damage/2));
+			System.out.println(attacker.getName() + "restored its HP");
+		}
+	}
 }
