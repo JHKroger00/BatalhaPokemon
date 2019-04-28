@@ -20,19 +20,48 @@ class EventSet {
 		events[i++] = e;
 	}	
 	
-	public 
+	public Event getEvent(int i) {
+		return events[i];
+	}
+	
 }
 
 public class Controller {
 	 private EventSet es = new EventSet(); 
+	 private Trainer t1, t2;
+	 
+	 public void setOptions(char opt) {
+	 }
 	 
 	 public void addEvent(Event c) { 
 		 es.add(c); 
 	 }  
 	 
-	 public void run(Event e, Trainer t) { 		 
-		 e.action(t); 
-		 System.out.println(e.description(t));   
+	 public void run() { 
+		 Event e;
+		 for(int j = 0; j < 2; j++) {
+			 e = es.getEvent(j);
+			 if(j == 0) {
+				 if(e.getName() == 'f') {
+					 e.setTrainers(t1, t2);
+				 }
+				 else
+					 e.setTrainer(t1);
+				 e.action();
+				 e.description();
+			 }
+			 else {
+				 if(e.getName() == 'f') {
+					 e.setTrainers(t2, t1);
+				 }
+				 else
+					 e.setTrainer(t2);
+				 e.action();
+				 e.description();
+			 }
+			 
+		 }
+			 
 	 } 
 	 
 } 

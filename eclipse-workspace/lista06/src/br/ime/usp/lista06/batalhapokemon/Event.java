@@ -12,6 +12,18 @@ package br.ime.usp.lista06.batalhapokemon;
 
 public abstract class Event {
 	 public char name;
-	 abstract public void action(Trainer t); 
-	 abstract public String description(Trainer t);
+	 abstract public void action(); 
+	 abstract public String description();
+	 
+	 public char getName() {
+		 return name;
+	 }
+	 
+	 public void setTrainers(Trainer t1, Trainer t2) {
+		 //This class is only implemented in the Event class 'Fight'
+	 }
+	 
+	 public void setTrainer(Trainer t) {
+		 //This class is implemented in the Event classes 'Run', 'Item' and 'Switch'
+	 }
 }
