@@ -94,16 +94,16 @@ public class Pokemon {
 		return spe;
 	}
 	
-	public int attackPokemon(Attack attack, Pokemon attacker, Pokemon defender) {
+	public int attackPokemon(Attack attack, Pokemon defender) {
 		if (attack.getCategory().equals("p")) {
 			int power = attack.getPower();
-			int atk = attacker.getAtk();
+			int atk = this.getAtk();
 			int def = defender.getDef();
 			return(((42)*power*(atk/def))/50)+2;
 		}
 		
 		int power = attack.getPower();
-		int spatk = attacker.getAtk();
+		int spatk = this.getAtk();
 		int spdef = defender.getSpDef(); 
 		return(((42)*power*(spatk/spdef))/50)+2;	
 	}
@@ -157,7 +157,7 @@ class Attack {
 	
 	public void hurtsUser(Attack attack, Pokemon attacker, Pokemon defender) {
 		String name = attack.getName();
-		int damage = attacker.attackPokemon(attack, attacker, defender);
+		int damage = attacker.attackPokemon(attack, defender);
 		
 		if(name.equals("TakeDown")) {
 			attacker.takeDamage(damage/4);
@@ -172,7 +172,7 @@ class Attack {
 	
 	public void healsUser(Attack attack, Pokemon attacker, Pokemon defender) {
 		String name = attack.getName();
-		int damage = attacker.attackPokemon(attack, attacker, defender);
+		int damage = attacker.attackPokemon(attack, defender);
 		
 		if(name.equals("Absorb")) {
 			attacker.setCurrentHP(attacker.getCurrentHP()+(damage/2));
