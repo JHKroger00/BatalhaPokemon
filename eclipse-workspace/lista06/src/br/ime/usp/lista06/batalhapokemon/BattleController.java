@@ -8,17 +8,13 @@ public class BattleController extends Controller {
 	
 	@Override
 	public void runFight() {
-		Event e;
-		for(int j = 0; j < 2; j++) {
-			e = es.getEvent(j);
-			if(j == 0) 
-				e.setTrainers(t1, t2);
-			else 
-				e.setTrainers(t2, t1);
-		}
-		Event e1 = es.getEvent(0);
-		Event e2 = es.getEvent(1);
-		if(e1.getPriority() >= e2.getPriority()) {
+		Fight e1 = (Fight)es.getEvent(0);
+		Fight e2 = (Fight)es.getEvent(1);
+		Attack a1, a2;
+		a1 = e1.setAttack(t1);
+		a2 = e2.setAttack(t2);
+		
+		if(a1.getPriority() >= a2.getPriority()) {
 			e1.action();
 			e1.description();
 			e2.action();
@@ -64,7 +60,8 @@ public class BattleController extends Controller {
 				}
 			}
 			sc.close();
-			return t.getCurrentPokemon().attack[a];
+			this.attack = t.getCurrentPokemon().attack[a];
+			return this.attack;
 		}
 		
 		public void action() {

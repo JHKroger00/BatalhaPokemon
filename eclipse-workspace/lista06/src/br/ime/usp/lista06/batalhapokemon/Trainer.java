@@ -61,6 +61,7 @@ public class Trainer {
 			}
 		}
 		t = new Trainer(auxName, id, auxPokemons, i, i);
+		t.setCurrent(1);
 		sc.close();
 		return t;
 	}
