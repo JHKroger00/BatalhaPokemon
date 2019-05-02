@@ -27,41 +27,56 @@ class EventSet {
 }
 
 public class Controller {
-	 private EventSet es = new EventSet(); 
-	 private Trainer t1, t2;
+	public EventSet es = new EventSet();
+	private Trainer t1, t2;
 	 
-	 public void setOptions(char opt) {
-	 }
+	public void setOptions(char opt) {
+	}
+	
+	public void addEvent(Event c) { 
+		es.add(c); 
+	}  
 	 
-	 public void addEvent(Event c) { 
-		 es.add(c); 
-	 }  
-	 
-	 public void run() { 
-		 Event e;
-		 for(int j = 0; j < 2; j++) {
-			 e = es.getEvent(j);
-			 if(j == 0) {
-				 if(e.getName() == 'f') {
-					 e.setTrainers(t1, t2);
+	public void run() { 
+		Event e;
+		for(int j = 0; j < 2; j++) {
+			e = es.getEvent(j);
+			if(j == 0) {
+				if(e.getName() == 'f') {
+					e.setTrainers(t1, t2);
 				 }
 				 else
 					 e.setTrainer(t1);
-				 e.action();
-				 e.description();
-			 }
-			 else {
-				 if(e.getName() == 'f') {
-					 e.setTrainers(t2, t1);
-				 }
-				 else
-					 e.setTrainer(t2);
-				 e.action();
-				 e.description();
-			 }
-			 
-		 }
-			 
-	 } 
-	 
-} 
+				 //e.action();
+				 //e.description();
+			}
+			else {
+				if(e.getName() == 'f') {
+					e.setTrainers(t2, t1);
+				}
+				else
+					e.setTrainer(t2);
+				//e.action();
+				//e.description();
+			}
+		}
+		Event e1 = es.getEvent(0);
+		Event e2 = es.getEvent(1);
+		if(e1.getPriority() >= e2.getPriority()) {
+			e1.action();
+			e1.description();
+			e2.action();
+			e2.description();	
+		}
+		else {
+			e2.action();
+			e2.description();
+			e1.action();
+			e1.description();
+		}		
+	}
+	
+	public void runFight() {
+		
+	}
+}

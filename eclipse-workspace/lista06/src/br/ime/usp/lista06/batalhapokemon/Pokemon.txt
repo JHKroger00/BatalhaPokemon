@@ -1,0 +1,10 @@
+9
+1 Bulbasaur Grass Poison 12 4 294 216 216 251 251 207 Tackle Absorb VineWhip RazorLeaf Normal Grass Grass Grass 1 12 12 12 p s p p 40 40 45 55 0 0 0 0
+2 Ivysaur Grass Poison 12 4 324 245 247 284 284 240 Headbutt SludgeBomb MegaDrain RazorLeaf Normal Poison Grass Grass 1 4 12 12 p s s s 70 90 60 55 0 0 0 0
+3 Venusaur Grass Poison 12 4 364 289 291 328 328 285 TakeDown SludgeBomb GigaDrain SolarBeam Normal Poison Grass Grass 1 4 12 12 p s s s 90 90 75 120 0 0 0 0
+4 Charmander Fire None 10 0 282 223 203 240 218 251 Scratch DragonRage Ember FireFang Normal Dragon Fire Fire 1 16 10 10 p s s p 40 40 40 65 0 0 0 0
+5 Charmeleon Fire None 10 0 320 249 236 284 251 284 Slash DragonRage FireFang Flamethrower Normal Dragon Fire Fire 1 16 10 10 p s p s 70 40 65 90 0 0 0 0
+6 Charizard Fire Flying 10 3 360 293 280 348 295 328 DragonClaw AirSlash Flamethrower FireBlast Dragon Flying Fire Fire 16 3 10 10 p s s s 80 75 90 110 0 0 0 0 
+7 Squirtle Water None 11 0 292 214 251 218 249 203 Tackle Bite WaterGun WaterPulse Normal Dark Water Water 1 17 11 11 p p s s 40 60 40 60 0 0 0 0 
+8 Wartortle Water None 11 0 322 247 284 251 284 236 Bite IceBeam WaterPulse Waterfall Dark Ice Water Water 17 15 11 11 p s s p 60 90 60 80 0 0 0 0
+9 Blastoise Water None 11 0 362 291 328 295 339 280 Headbutt IceBeam Waterfall HydroPump Normal Ice Water Water 1 17 11 11 p s p s 70 90 80 110 0 0 0 0

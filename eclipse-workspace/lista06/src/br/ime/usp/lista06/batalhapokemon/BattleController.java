@@ -4,6 +4,33 @@ import java.util.Scanner;
 
 public class BattleController extends Controller {
 	public Trainer t1, t2;
+	private TypeChart tc = new TypeChart();
+	
+	@Override
+	public void runFight() {
+		Event e;
+		for(int j = 0; j < 2; j++) {
+			e = es.getEvent(j);
+			if(j == 0) 
+				e.setTrainers(t1, t2);
+			else 
+				e.setTrainers(t2, t1);
+		}
+		Event e1 = es.getEvent(0);
+		Event e2 = es.getEvent(1);
+		if(e1.getPriority() >= e2.getPriority()) {
+			e1.action();
+			e1.description();
+			e2.action();
+			e2.description();	
+		}
+		else {
+			e2.action();
+			e2.description();
+			e1.action();
+			e1.description();
+		}		
+	}
 	
 	class Fight extends Event {
 		public final char name = 'f';
@@ -18,10 +45,10 @@ public class BattleController extends Controller {
 			this.defender = t2;
 		}
 		
-		public void action() {
-			System.out.println("Which move should " + attacker.getCurrentPokemon().getName() + " use?");
+		public Attack setAttack(Trainer t) {
+			System.out.println("Which move should " + t.getCurrentPokemon().getName() + " use?");
 			for(int i = 0; i < 4; i++) {
-				System.out.println((i+1) + attacker.getCurrentPokemon().attack[i].getName());
+				System.out.println((i+1) + t.getCurrentPokemon().attack[i].getName());
 			}
 			
 			Scanner sc = new Scanner(System.in);
@@ -35,13 +62,16 @@ public class BattleController extends Controller {
 					System.out.println("Choose another move!");
 					a = sc.nextInt();
 				}
-			}	
+			}
+			sc.close();
+			return t.getCurrentPokemon().attack[a];
+		}
+		
+		public void action() {
 			attack = attacker.getCurrentPokemon().attack[a-1];
-			damage = attacker.getCurrentPokemon().attackPokemon(attack, defender.getCurrentPokemon()); //Mudar a função attackPokemon
+			damage = attacker.getCurrentPokemon().attackPokemon(attack, defender.getCurrentPokemon(), tc); 
 			defender.getCurrentPokemon().takeDamage(damage);
 			usable = true;
-			
-			sc.close();
 		}
 		
 		public String description() {
@@ -65,7 +95,7 @@ public class BattleController extends Controller {
 			System.out.println("Choose the Pokemon to switch in");
 			for (int i = 0; i < 6 && t.getPokemon(i) != null; i++) {
 				System.out.println((i+1) + " - " + t.getPokemon(i).getName() + " HP: " + t.getPokemon(i).getCurrentHP() 
-						+ "/" + t.getPokemon(i).getMaxHP());
+									+ "/" + t.getPokemon(i).getMaxHP());
 				n = i+1;
 			}
 			
@@ -105,7 +135,9 @@ public class BattleController extends Controller {
 	private class Item extends Event {
 		public final char name = 'i';
 		public final int priority = 2;
-		public int item;
+		public int item, p;
+		private String pokemon;
+		private boolean usable, available;
 		public Trainer t;
 		
 		public void setTrainer(Trainer t) {
@@ -117,18 +149,57 @@ public class BattleController extends Controller {
 			
 			System.out.println("Choose item:");
 			System.out.println("1 - Potion");
-			System.out.println("2 - Superpotion");
-			System.out.println("3 - Hyperpotion");
+			System.out.println("2 - Super potion");
+			System.out.println("3 - Hyper potion");
 			
 			item = sc.nextInt();
 			
-			switch(item) {
-				case 1 : Bag.useItem("potion", t.getCurrentPokemon());
-					break;
-				case 2 : Bag.useItem("superpotion", t.getCurrentPokemon());
-					break;
-				case 3 : Bag.useItem("hyperpotion", t.getCurrentPokemon());
-					break;
+			System.out.println("Which pokemon should be healed?");
+			for(int i = 0; i < t.getNumberOfPokemon(); i++) {
+				System.out.println((i+1) + t.getPokemon(i).getName());
+			}
+			
+			pokemon = sc.nextLine();
+			
+			while(!available) {
+				int i;
+				for (i = 0; (!pokemon.equals(t.getPokemon(i).getName())) && i < t.getNumberOfPokemon(); i++);
+					if (i < t.getNumberOfPokemon()) {
+						if(!t.getPokemon(i).fainted()) {
+							p = i;
+							available = true;
+						}
+						else {
+							System.out.println("Chosen Pokemon cannot battle anymore!");
+							System.out.println("Choose another Pokemon");
+							pokemon = sc.nextLine();
+						}		
+					}
+					else {
+						System.out.println("Chosen Pokemon is not available!");
+						System.out.println("Choose another Pokemon");
+						pokemon = sc.nextLine();
+					}
+			}
+			
+			while (!usable) {
+				if (item == 1) {
+					Bag.useItem("potion", t.getPokemon(p));
+					usable = true;
+				}
+				else if (item == 2) {
+					Bag.useItem("super potion", t.getPokemon(p));
+					usable = true;
+				}
+				else if (item == 3) {
+					Bag.useItem("hyper potion", t.getPokemon(p));
+					usable = true;
+				}
+				else {
+					System.out.println("Chosen item not available!");
+					System.out.println("Choose another item!");
+					item = sc.nextInt();
+				}
 			}
 			sc.close();
 		}
@@ -188,14 +259,15 @@ public class BattleController extends Controller {
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Scanner sc = new Scanner(System.in);
+		PokemonList pl = new PokemonList();
 		boolean finished = false;
 		
 		BattleController bc = new BattleController();
 		
-		bc.t1 = Trainer.createTrainer(1);
-		bc.t2 = Trainer.createTrainer(2);
+		bc.t1 = Trainer.createTrainer(1, pl);
+		bc.t2 = Trainer.createTrainer(2, pl);
 		
 		while(!finished) {
 			char auxOpt1;
@@ -221,7 +293,11 @@ public class BattleController extends Controller {
 			bc.setOptions(auxOpt1);
 			bc.setOptions(auxOpt2);
 			
-			bc.run();
+			if (auxOpt1 == 'f' && auxOpt2 == 'f') {
+				
+			}
+			else 	
+				bc.run();
 			
 			if(auxOpt1 == 'r') {
 				finished = true;
@@ -232,7 +308,6 @@ public class BattleController extends Controller {
 				System.out.println("The fight is over, " + bc.t2.getName() + " won the battle!");
 			}
 		}
-
+		sc.close();
 	}
-
 }

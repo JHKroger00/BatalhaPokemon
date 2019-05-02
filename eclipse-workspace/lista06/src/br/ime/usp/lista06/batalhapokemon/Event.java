@@ -11,12 +11,18 @@
 package br.ime.usp.lista06.batalhapokemon;
 
 public abstract class Event {
-	 public char name;
-	 abstract public void action(); 
-	 abstract public String description();
-	 
+	
+	public char name;
+	public int priority;
+	abstract public void action(); 
+	abstract public String description();
+	
 	 public char getName() {
 		 return name;
+	 }
+	 
+	 public int getPriority() {
+		 return priority;
 	 }
 	 
 	 public void setTrainers(Trainer t1, Trainer t2) {
