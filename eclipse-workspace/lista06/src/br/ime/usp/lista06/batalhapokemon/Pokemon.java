@@ -163,7 +163,7 @@ public class Pokemon {
 		Pokemon pokemon;
 		Attack[] attacks = new Attack[4];
 		int i;
-		for(i = 0; !(pl.names[i].equals(name)) && i < pl.names.length; i++);
+		for(i = 0; i < pl.names.length && !(pl.names[i].equals(name)); i++);
 		if (i < pl.names.length) {
 			for(int j = 0; j < 4; j++) {
 				attacks[j] = new Attack(pl.attacks[i][j], pl.attackType[i][j], pl.attackTypeNum[i][j], pl.category[i][j], 
@@ -220,38 +220,36 @@ class Attack {
 		return priority;
 	}
 	
-	public void hurtsUser(Attack attack, Pokemon attacker, Pokemon defender, TypeChart tc) {
+	public void hurtsUser(Attack attack, Pokemon p, int damage) {
 		String name = attack.getName();
-		int damage = attacker.attackPokemon(attack, defender, tc);
 		
 		if(name.equals("TakeDown")) {
-			attacker.takeDamage(damage/4);
-			System.out.println(attacker.getName() + "lost some of its HP due to recoil");
+			p.takeDamage(damage/4);
+			System.out.println(p.getName() + "lost some of its HP due to recoil");
 		}
 		
 		if(name.equals("DoubleEdge")) {
-			attacker.takeDamage(damage/3);
-			System.out.println(attacker.getName() + "lost some of its HP due to recoil");
+			p.takeDamage(damage/3);
+			System.out.println(p.getName() + "lost some of its HP due to recoil");
 		}
 	}
 	
-	public void healsUser(Attack attack, Pokemon attacker, Pokemon defender, TypeChart tc) {
+	public void healsUser(Attack attack, Pokemon p, int damage) {
 		String name = attack.getName();
-		int damage = attacker.attackPokemon(attack, defender, tc);
 		
 		if(name.equals("Absorb")) {
-			attacker.setCurrentHP(attacker.getCurrentHP()+(damage/2));
-			System.out.println(attacker.getName() + "restored some of its HP");
+			p.setCurrentHP(p.getCurrentHP()+(damage/2));
+			System.out.println(p.getName() + "restored some of its HP");
 		}
 		
 		if(name.equals("MegaDrain")) {
-			attacker.setCurrentHP(attacker.getCurrentHP()+(damage/2));
-			System.out.println(attacker.getName() + "restored some of its HP");
+			p.setCurrentHP(p.getCurrentHP()+(damage/2));
+			System.out.println(p.getName() + "restored some of its HP");
 		}
 		
 		if(name.equals("GigaDrain")) {
-			attacker.setCurrentHP(attacker.getCurrentHP()+(damage/2));
-			System.out.println(attacker.getName() + "restored some of its HP");
+			p.setCurrentHP(p.getCurrentHP()+(damage/2));
+			System.out.println(p.getName() + "restored some of its HP");
 		}
 	}
 }

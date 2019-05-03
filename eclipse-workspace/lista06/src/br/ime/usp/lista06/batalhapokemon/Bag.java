@@ -1,10 +1,10 @@
 /*********************************************************/
 /** 						                            **/
-/** Autores: João Henrique de A. Kröger  NUSP: 10770109 **/
+/** Autores: Joï¿½o Henrique de A. Krï¿½ger  NUSP: 10770109 **/
 /**			 Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
-/** Lista 06 - Exercício 01                             **/
+/** Lista 06 - Exercï¿½cio 01                             **/
 /**                                                     **/
 /*********************************************************/
 
@@ -19,8 +19,10 @@ public class Bag {
 		int currentHP = p.getCurrentHP();
 		int maxHP = p.getMaxHP();
 		
-		if (currentHP == maxHP)
-			System.out.println(p.getName() + "'s HP is full");
+		if (currentHP == maxHP) {
+			System.out.println(p.getName() + "'s HP is full!");
+			return;
+		}
 		
 		else if (item.equals("potion")) {
 			if (currentHP + potion < maxHP)
@@ -45,9 +47,6 @@ public class Bag {
 				p.setCurrentHP(maxHP);
 			return;
 		}
-			
-		else 
-			System.out.println("Chosen item not available");
 	}
 	
 	

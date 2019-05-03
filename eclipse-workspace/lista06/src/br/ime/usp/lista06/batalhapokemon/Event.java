@@ -17,19 +17,13 @@ public abstract class Event {
 	abstract public void action(); 
 	abstract public String description();
 	
-	 public char getName() {
-		 return name;
-	 }
+	 public abstract char getName();
+
 	 
-	 public int getPriority() {
-		 return priority;
-	 }
+	 public abstract int getPriority();
 	 
-	 public void setTrainers(Trainer t1, Trainer t2) {
-		 //This class is only implemented in the Event class 'Fight'
-	 }
+	 public abstract void setTrainers(Trainer t1, Trainer t2);
 	 
-	 public void setTrainer(Trainer t) {
-		 //This class is implemented in the Event classes 'Run', 'Item' and 'Switch'
-	 }
+	 public abstract void setTrainer(Trainer t);
+		 
 }

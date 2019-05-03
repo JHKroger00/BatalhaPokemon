@@ -14,7 +14,9 @@ public class PokemonList {
 	
 	public PokemonList() throws Exception {
 		
-		File file = new File("C:\\Users\\Finder Telecom\\eclipse-workspace\\Lista06\\src\\br\\ime\\usp\\mac0321\\BatalhaPokemon\\Pokemon.txt");
+		String absPath = new File("").getAbsolutePath();
+		
+		File file = new File(absPath + "/src/br/ime/usp/lista06/batalhapokemon/Pokemon.txt");
 		BufferedReader br = new BufferedReader(new FileReader(file));
 			
 		String st = br.readLine();

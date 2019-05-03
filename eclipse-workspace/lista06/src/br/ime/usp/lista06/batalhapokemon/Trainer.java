@@ -33,18 +33,17 @@ public class Trainer {
 	
 	public  static Trainer createTrainer(int id, PokemonList pl) {
 		Trainer t;
-		Scanner sc = new Scanner(System.in);
 		int i;
 		
 		System.out.println("Trainer " + id + ", what's your name?");
-		String auxName = sc.nextLine();
+		String auxName = BattleController.sc.nextLine();
 		Pokemon[] auxPokemons = new Pokemon[6];
 		
 		for(i = 0; i < 6; i++) {
-			System.out.println(auxName + ", choose your " + i + " Pokemon. Type 'none' if you don't want"
+			System.out.println(auxName + ", choose your " + (i+1) + " Pokemon. Type 'none' if you don't want "
 					+ "any more Pokemons.");
 			
-			String auxPokemonName = sc.nextLine();
+			String auxPokemonName = BattleController.sc.nextLine();
 			if(!auxPokemonName.equals("none") && !auxPokemonName.equals("None")) {
 				if (Pokemon.setPokemon(auxPokemonName, pl) != null)
 					auxPokemons[i] = Pokemon.setPokemon(auxPokemonName, pl);
@@ -55,14 +54,20 @@ public class Trainer {
 				}
 			}
 			else {
-				for(int j = i; j < 6; j++)
-					auxPokemons[j] = null; //Creates a null Pokemon 
-				break;
+				if(i == 0) {
+					System.out.println("Chosen Pokemon is not available!");
+					System.out.println("Choose another Pokemon!");
+					i--;
+				}
+				else {
+					for(int j = i; j < 6; j++)
+						auxPokemons[j] = null; //Creates a null Pokemon 
+					break;
+				}
 			}
 		}
 		t = new Trainer(auxName, id, auxPokemons, i, i);
-		t.setCurrent(1);
-		sc.close();
+		t.setCurrent(0);
 		return t;
 	}
 	
