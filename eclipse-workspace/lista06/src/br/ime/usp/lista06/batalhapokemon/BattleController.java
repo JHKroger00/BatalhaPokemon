@@ -7,40 +7,57 @@ public class BattleController extends Controller {
 	private TypeChart tc = new TypeChart();
 	public static Scanner sc = new Scanner(System.in);
 	
+	public static int getInt(Scanner s) {
+		while(!s.hasNextInt()) {
+			System.out.println("Option not available, select another!");
+			s.next();
+		}
+		return s.nextInt();
+	}
+	
 	@Override
 	public void run() { 
-		Event e;
-		for(int j = 0; j < 2; j++) {
-			e = es.getEvent(j);
-			if(j == 0) {
-				if(e.getName() == 'f') {
-					e.setTrainers(t1, t2);
-					Fight f = (Fight)e;
-					f.setAttack(t1);
-				}
-				else {
-					e.setTrainer(t1);
-				}
-			}
-			else {
-				if(e.getName() == 'f') {
-					e.setTrainers(t2, t1);
-					Fight f = (Fight)e;
-					f.setAttack(t1);
-				}
-				else
-					e.setTrainer(t2);
-			}
-		}
 		Event e1 = es.getEvent(0);
 		Event e2 = es.getEvent(1);
+		System.out.println(e1.getPriority() + "event1" + e2.getPriority() + "event2");
 		if(e1.getPriority() >= e2.getPriority()) {
+			if(e1.getName() == 'f') {
+				e1.setTrainers(t1, t2);
+				Fight f = (Fight)e1;
+				f.setAttack(t1);
+			}
+			else {
+				e1.setTrainer(t1);
+			}
+			if(e2.getName() == 'f') {
+				e2.setTrainers(t2, t1);
+				Fight f = (Fight)e2;
+				f.setAttack(t2);
+			}
+			
 			e1.action();
 			e1.description();
 			e2.action();
 			e2.description();	
 		}
 		else {
+			if(e1.getName() == 'f') {
+				e2.setTrainers(t2, t1);
+				Fight f = (Fight)e2;
+				f.setAttack(t2);
+			}
+			else {
+				e2.setTrainer(t2);
+			}
+			if(e1.getName() == 'f') {
+				e1.setTrainers(t1, t2);
+				Fight f = (Fight)e1;
+				f.setAttack(t1);
+			}
+			else {
+				e1.setTrainer(t1);
+			}
+			
 			e2.action();
 			e2.description();
 			e1.action();
@@ -58,7 +75,6 @@ public class BattleController extends Controller {
 		
 		e1.setTrainers(t1, t2);
 		e2.setTrainers(t2, t1);
-		
 		if(a1.getPriority() > a2.getPriority()) {
 			e1.action();
 			e1.description();
@@ -118,7 +134,7 @@ public class BattleController extends Controller {
 				System.out.println((i+1) + t.getCurrentPokemon().attack[i].getName());
 			}
 			
-			a = sc.nextInt();
+			a = getInt(sc);
 			
 			while(!usable) {
 				if (a >= 1 && a <= 4)
@@ -126,7 +142,7 @@ public class BattleController extends Controller {
 				else {
 					System.out.println("Chosen move does not exist!");
 					System.out.println("Choose another move!");
-					a = sc.nextInt();
+					a = getInt(sc);
 				}
 			}
 			this.attack = t.getCurrentPokemon().attack[a-1];
@@ -178,23 +194,24 @@ public class BattleController extends Controller {
 				n = i+1;
 			}
 			
-			p = sc.nextInt();
+			
+			p = getInt(sc);
 			
 			while (!usable) {
 				if(p == (t.getCurrent()+1)) {
 					System.out.println(t.getCurrentPokemon().getName() + "is already in battle!");
 					System.out.println("Choose another Pokemon!");
-					p = sc.nextInt();
+					p = getInt(sc);
 				}
 				else if(p < 1 || p > n) {
 					System.out.println("Chosen Pokemon does not exist!");
 					System.out.println("Choose another Pokemon!");
-					p = sc.nextInt();
+					p = getInt(sc);
 				}
-				else if(t.getPokemon(p - 1).getCurrentHP() == 0) {
+				else if(t.getPokemon(p - 1).getCurrentHP() <= 0) {
 					System.out.println(t.getPokemon(p - 1).getName() + "is fainted!");
 					System.out.println("Choose another Pokemon!");
-					p = sc.nextInt();
+					p = getInt(sc);
 				}
 				else {
 					t.setCurrent(p - 1);
@@ -239,14 +256,14 @@ public class BattleController extends Controller {
 			System.out.println("2 - Super potion");
 			System.out.println("3 - Hyper potion");
 			
-			item = sc.nextInt();
+			item = getInt(sc);
 			
 			System.out.println("Which pokemon should be healed?");
 			for(int i = 0; i < t.getNumberOfPokemon(); i++) {
 				System.out.println((i+1) + t.getPokemon(i).getName());
 			}
 			
-			pokemon = sc.nextInt();
+			pokemon = getInt(sc);
 			
 			while(!available) {
 				if (pokemon > 0 && pokemon <= t.getNumberOfPokemon()) {
@@ -257,13 +274,13 @@ public class BattleController extends Controller {
 					else {
 						System.out.println("Chosen Pokemon cannot battle anymore!");
 						System.out.println("Choose another Pokemon");
-						pokemon = sc.nextInt();
+						pokemon = getInt(sc);
 					}		
 				}
 				else {
 					System.out.println("Chosen Pokemon is not available!");
 					System.out.println("Choose another Pokemon");
-					pokemon = sc.nextInt();
+					pokemon = getInt(sc);
 				}
 			}
 			
@@ -283,7 +300,7 @@ public class BattleController extends Controller {
 				else {
 					System.out.println("Chosen item not available!");
 					System.out.println("Choose another item!");
-					item = sc.nextInt();
+					item = getInt(sc);
 				}
 			}
 		}
@@ -299,6 +316,35 @@ public class BattleController extends Controller {
 			default :
 					 return("Chosen item not available");
 			}
+		}
+		
+	}
+	
+	private class nullEvent extends Event {
+		public final char name = 'n';
+		public final int priority = 0;
+		
+		@Override
+		public void action() {
+			// This event does nothing 
+		}
+		@Override
+		public String description() {
+			return " ";
+		}
+		@Override
+		public char getName() {
+			return name;
+		}
+		@Override
+		public int getPriority() {
+			return priority;
+		}
+		@Override
+		public void setTrainers(Trainer t1, Trainer t2) {
+		}
+		@Override
+		public void setTrainer(Trainer t) {
 		}
 		
 	}
@@ -352,6 +398,8 @@ public class BattleController extends Controller {
 		case 'f':
 			this.addEvent(new Fight());
 			break;
+		default:
+			this.addEvent(new nullEvent());
 		}
 	}
 	
@@ -404,18 +452,31 @@ public class BattleController extends Controller {
 			else 	
 				bc.run();
 			
-			if(p1.fainted()) {
-				
+			if(bc.t1.activePokemonFainted()) {
+				if(bc.t1.getActivePokemon() > 0) {
+					System.out.println(bc.t1.getName() + " you need to choose another pokemon!");
+					bc.setOptions('s');
+					bc.setOptions('0');
+					bc.run();
+				}
+				else {
+					finished = true;
+					System.out.println("The fight is over, " + bc.t2.getName() + " won the battle!");
+				}
+			}
+			if(bc.t2.activePokemonFainted()) {
+				if(bc.t2.getActivePokemon() > 0) {
+					System.out.println(bc.t2.getName() + " you need to choose another pokemon!");
+					bc.setOptions('0');
+					bc.setOptions('s');
+					bc.run();
+				}
+				else {
+					finished = true;
+					System.out.println("The fight is over, " + bc.t1.getName() + " won the battle!");
+				}
 			}
 			
-			if(bc.t1.getActivePokemon() == 0) {
-				finished = true;
-				System.out.println("The fight is over, " + bc.t2.getName() + " won the battle!");
-			}
-			else if(bc.t2.getActivePokemon() == 0) {
-				finished = true;
-				System.out.println("The fight is over, " + bc.t1.getName() + " won the battle!");
-			}
 			else if(auxOpt1 == 'r') {
 				finished = true;
 				System.out.println("The fight is over, " + bc.t2.getName() + " won the battle!");

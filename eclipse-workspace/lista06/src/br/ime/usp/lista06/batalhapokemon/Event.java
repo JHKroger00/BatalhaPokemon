@@ -11,9 +11,6 @@
 package br.ime.usp.lista06.batalhapokemon;
 
 public abstract class Event {
-	
-	public char name;
-	public int priority;
 	abstract public void action(); 
 	abstract public String description();
 	

@@ -106,6 +106,15 @@ public class Trainer {
 	public int getActivePokemon() {
 		return activePokemon;
 	}
+	
+	public boolean activePokemonFainted() {
+		if(pokemon[currentPokemon].fainted()) {
+			activePokemon--;
+			return true;
+		}
+		else
+			return false;
+	}
 }
 
 
