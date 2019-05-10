@@ -20,6 +20,7 @@ public class Trainer {
 	private int currentPokemon;
 	private int numberOfPokemon;
 	private int activePokemon;
+	private int[] positionInMap;
 	
 	public Trainer(String name, int id, Pokemon[] Pokemons, int numberOfPokemon, int activePokemon) {
 		this.name = name;
@@ -114,6 +115,27 @@ public class Trainer {
 		}
 		else
 			return false;
+	}
+	
+	public void walkInMap(char direction, int[] sizeOfMap) {
+		switch (direction) {
+			case 'w':
+				positionInMap[1] += 1;
+				break;
+			case 's':
+				positionInMap[1] -= 1;
+				break;
+			case 'a':
+				positionInMap[0] -= 1;
+				break;
+			case 'd':
+				positionInMap[0] += 1;
+				break;
+		}
+	}
+	
+	public int[] getPosition() {
+		return positionInMap;
 	}
 }
 
