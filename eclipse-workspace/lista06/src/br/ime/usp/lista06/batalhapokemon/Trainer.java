@@ -36,14 +36,14 @@ public class Trainer {
 		int i;
 		
 		System.out.println("Trainer " + id + ", what's your name?");
-		String auxName = BattleController.sc.nextLine();
+		String auxName = TrainerBattleController.sc.nextLine();
 		Pokemon[] auxPokemons = new Pokemon[6];
 		
 		for(i = 0; i < 6; i++) {
 			System.out.println(auxName + ", choose your " + (i+1) + " Pokemon. Type 'none' if you don't want "
 					+ "any more Pokemons.");
 			
-			String auxPokemonName = BattleController.sc.nextLine();
+			String auxPokemonName = TrainerBattleController.sc.nextLine();
 			if(!auxPokemonName.equals("none") && !auxPokemonName.equals("None")) {
 				if (Pokemon.setPokemon(auxPokemonName, pl) != null)
 					auxPokemons[i] = Pokemon.setPokemon(auxPokemonName, pl);

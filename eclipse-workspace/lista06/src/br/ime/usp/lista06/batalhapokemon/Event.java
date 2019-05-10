@@ -1,26 +1,31 @@
 /*********************************************************/
 /** 						                            **/
-/** Autores: Jo�o Henrique de A. Kr�ger  NUSP: 10770109 **/
+/** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
 /**			 Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
-/** Lista 06 - Exerc�cio 01                             **/
+/** Lista 06 - Exercicio 01                             **/
 /**                                                     **/
 /*********************************************************/
 
 package br.ime.usp.lista06.batalhapokemon;
 
 public abstract class Event {
-	abstract public void action(); 
-	abstract public String description();
 	
-	 public abstract char getName();
+	abstract public void action(); 
+	
+	abstract public void description();
+	
+	public abstract char getName();
 
+	public abstract int getPriority();
 	 
-	 public abstract int getPriority();
+	public void setTrainers(Trainer t1, Trainer t2) {
+		// This method is used for the fight event
+	}
 	 
-	 public abstract void setTrainers(Trainer t1, Trainer t2);
-	 
-	 public abstract void setTrainer(Trainer t);
+	public void setTrainer(Trainer t) {
+		// This method is used for the other kinds of events
+	}
 		 
 }

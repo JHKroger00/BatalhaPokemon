@@ -1,29 +1,22 @@
 /*********************************************************/
 /** 						                            **/
-/** Autores: Jo�o Henrique de A. Kr�ger  NUSP: 10770109 **/
+/** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
 /**			 Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
-/** Lista 06 - Exerc�cio 01                             **/
+/** Lista 06 - Exercicio 01                             **/
 /**                                                     **/
 /*********************************************************/
 
 package br.ime.usp.lista06.batalhapokemon;
 
 public class Pokemon {
-	private String name;
-	private int dexNum;
-	private String type1;
-	private String type2;
-	private int type1Num;
-	private int type2Num;
-	private final int maxHP;
+	private final String name;
+	private final int dexNum;
+	private final String type1, type2;
+	private final int type1Num, type2Num;
+	private final int maxHP, atk, def, spatk, spdef, spe;
 	private int currentHP;
-	private final int atk;
-	private final int def;
-	private final int spatk;
-	private final int spdef;
-	private final int spe;
 	public final Attack[] attack = new Attack[4];
 	private boolean fainted = false;
 	
@@ -126,6 +119,7 @@ public class Pokemon {
 	public int attackPokemon(Attack attack, Pokemon defender, TypeChart tc) {
 		double modifier = tc.typeChart[attack.getTypeNum()][defender.getType1Num()]*
 				          tc.typeChart[attack.getTypeNum()][defender.getType2Num()];
+		double stab = 1;
 		double damage;
 		
 		if(comparesDouble(modifier, 0.00)) {
@@ -140,18 +134,22 @@ public class Pokemon {
 			System.out.println("It's super effective!");
 		}
 		
+		if((attack.getTypeNum() == type1Num) || (attack.getTypeNum() == type2Num)) {
+			stab = 1.5;
+		}
+			
 		if (attack.getCategory().equals("p")) {
 			int power = attack.getPower();
 			int atk = this.getAtk();
 			int def = defender.getDef();
-			damage = ((((42)*power*(atk/def))/50)+2)*modifier;
+			damage = ((((22)*power*(atk/def))/50)+2)*modifier*stab;
 			return (int)damage;
 		}
 		
 		int power = attack.getPower();
 		int spatk = this.getSpAtk();
 		int spdef = defender.getSpDef(); 
-		damage = ((((42)*power*(spatk/spdef))/50)+2)*modifier;
+		damage = ((((22)*power*(spatk/spdef))/50)+2)*modifier*stab;
 		return (int)damage;
 	}
 	
@@ -225,12 +223,12 @@ class Attack {
 		
 		if(name.equals("TakeDown")) {
 			p.takeDamage(damage/4);
-			System.out.println(p.getName() + "lost some of its HP due to recoil");
+			System.out.println(p.getName() + " lost some of its HP due to recoil");
 		}
 		
 		if(name.equals("DoubleEdge")) {
 			p.takeDamage(damage/3);
-			System.out.println(p.getName() + "lost some of its HP due to recoil");
+			System.out.println(p.getName() + " lost some of its HP due to recoil");
 		}
 	}
 	
@@ -239,17 +237,17 @@ class Attack {
 		
 		if(name.equals("Absorb")) {
 			p.setCurrentHP(p.getCurrentHP()+(damage/2));
-			System.out.println(p.getName() + "restored some of its HP");
+			System.out.println(p.getName() + " restored some of its HP");
 		}
 		
 		if(name.equals("MegaDrain")) {
 			p.setCurrentHP(p.getCurrentHP()+(damage/2));
-			System.out.println(p.getName() + "restored some of its HP");
+			System.out.println(p.getName() + " restored some of its HP");
 		}
 		
 		if(name.equals("GigaDrain")) {
 			p.setCurrentHP(p.getCurrentHP()+(damage/2));
-			System.out.println(p.getName() + "restored some of its HP");
+			System.out.println(p.getName() + " restored some of its HP");
 		}
 	}
 }
