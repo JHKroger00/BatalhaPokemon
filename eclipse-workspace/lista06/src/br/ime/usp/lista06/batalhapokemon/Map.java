@@ -43,6 +43,7 @@ public class Map {
 								  {rS, rS, rS, gS, gS, gS, gS, gS, gS, gS, gS, gS, gS}};
 	
 	public void printActualMap() {
+		System.out.println();
 		for (int i = 0; i < sizeOfMap[0]; i++) {
 			for (int j = 0; j < sizeOfMap[1]; j++) {
 				System.out.print(actualMap[i][j]);
@@ -50,6 +51,7 @@ public class Map {
 			System.out.println();
 		}
 	}
+	
 	public void printOriginalMap() {
 		for (int i = 0; i < sizeOfMap[0]; i++) {
 			for (int j = 0; j < sizeOfMap[1]; j++) {
@@ -88,7 +90,7 @@ public class Map {
 	public boolean hasPokemon(Trainer t) {
 		if (isGrass(t.getPosition())) {
 			Random gerador = new Random(System.currentTimeMillis());
-			int rand = gerador.nextInt() % 10;
+			int rand = gerador.nextInt(10);
 			if (rand <= probability)
 				return true;
 			else
@@ -98,17 +100,28 @@ public class Map {
 			return false;
 	}
 	
+	static Pokemon getWildPokemon(PokemonList pl) {
+		int numberOfPokemons = pl.names.length;
+		Random gerador = new Random(System.currentTimeMillis());
+		int rand = gerador.nextInt(numberOfPokemons);
+		Pokemon wild = Pokemon.setPokemon(pl.names[rand] , pl);
+		return wild;
+	}
+	
 	public static void main(String[] args) throws Exception {
 		PokemonList pl = new PokemonList();
 		Map mapa = new Map();
+		Pokemon wild;
 		Trainer t = Trainer.createTrainer(0, pl);
 		char dir;
 		mapa.printActualMap();
 		dir = TrainerBattleController.sc.next().charAt(0);
 		while(mapa.move(t,  dir)) {
 			mapa.printActualMap();
-			if(mapa.hasPokemon(t))
-				System.out.println("You found a wild pokemon");
+			if(mapa.hasPokemon(t)) {
+				wild = getWildPokemon(pl);
+				System.out.println("A wild " + wild.getName() + " appeared!");
+			}
 			dir = TrainerBattleController.sc.next().charAt(0);
 		}
 		System.out.println("You walked away from the map");
