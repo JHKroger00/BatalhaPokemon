@@ -20,7 +20,8 @@ public class PokemonList {
 	int[] dexNum;
 	String[] names;
 	String[][] types, attacks, attackType, category;
-	int[][] typeNum, stats, attackTypeNum, power, priority; 
+	int[][] typeNum, stats, attackTypeNum, power, priority;
+	int[] catchRate;
 	
 	public PokemonList() throws Exception {
 		
@@ -43,6 +44,7 @@ public class PokemonList {
 		category = new String[pokemons][4];
 		power = new int[pokemons][4];
 		priority = new int[pokemons][4];
+		catchRate = new int[pokemons];
 			
 		while ((st = br.readLine()) != null && i < pokemons) {
 			if (!st.equals("")) {
@@ -67,6 +69,7 @@ public class PokemonList {
 					power[i][j] = Integer.parseInt(info[k++]);
 				for(j = 0; j < 4; j++) 
 					priority[i][j] = Integer.parseInt(info[k++]);
+				catchRate[i] = Integer.parseInt(info[k++]);
 				i++; k = 0;
 			}
 		}

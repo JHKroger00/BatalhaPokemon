@@ -10,8 +10,6 @@
 
 package br.ime.usp.lista06.batalhapokemon;
 
-import java.util.Scanner;
-
 public class Trainer {
 	
 	private String name;
@@ -22,7 +20,7 @@ public class Trainer {
 	private int activePokemon;
 	private int[] positionInMap = {0, 5};
 	
-	public Trainer(String name, int id, Pokemon[] Pokemons, int numberOfPokemon, int activePokemon) {
+	private Trainer(String name, int id, Pokemon[] Pokemons, int numberOfPokemon, int activePokemon) {
 		this.name = name;
 		this.id = id;
 		for(int i = 0; i < 6; i++) {
@@ -32,44 +30,85 @@ public class Trainer {
 		this.activePokemon = activePokemon;
 	}
 	
-	public  static Trainer createTrainer(int id, PokemonList pl) {
+	public  static Trainer createTrainer(int id, PokemonList pl, int opt) {
 		Trainer t;
 		int i;
 		
-		System.out.println("Trainer " + id + ", what's your name?");
-		String auxName = TrainerBattleController.sc.nextLine();
-		Pokemon[] auxPokemons = new Pokemon[6];
-		
-		for(i = 0; i < 6; i++) {
-			System.out.println(auxName + ", choose your " + (i+1) + " Pokemon. Type 'none' if you don't want "
-					+ "any more Pokemons.");
+		if (opt == 0) {
+			System.out.println("Trainer " + id + ", what's your name?");
+			String auxName = TrainerBattleController.sc.nextLine();
+			Pokemon[] auxPokemons = new Pokemon[6];
+			
+			for(i = 0; i < 6; i++) {
+				System.out.println(auxName + ", choose your " + (i+1) + " Pokemon. Type 'none' if you don't want "
+						+ "any more Pokemons.");
+				
+				String auxPokemonName = TrainerBattleController.sc.nextLine();
+				if(!auxPokemonName.equals("none") && !auxPokemonName.equals("None")) {
+					if (Pokemon.setPokemon(auxPokemonName, pl) != null)
+						auxPokemons[i] = Pokemon.setPokemon(auxPokemonName, pl);
+					else {
+						System.out.println("Chosen Pokemon is not available!");
+						System.out.println("Choose another Pokemon!");
+						i--;
+					}
+				}
+				else {
+					if(i == 0) {
+						System.out.println("Chosen Pokemon is not available!");
+						System.out.println("Choose another Pokemon!");
+						i--;
+					}
+					else {
+						for(int j = i; j < 6; j++)
+							auxPokemons[j] = null; //Creates a null Pokemon 
+						break;
+					}
+				}
+			}
+			t = new Trainer(auxName, id, auxPokemons, i, i);
+			t.setCurrent(0);
+			return t;
+		}
+		if(opt == 1) {
+			boolean available = false;
+			
+			System.out.println("Trainer, what's your name?");
+			String auxName = TrainerBattleController.sc.nextLine();
+			Pokemon[] auxPokemons = new Pokemon[6];
+			
+			System.out.println("Which starter Pokemon would you like to take on your journey?");
+			System.out.println("Bulbasaur, the grass-type Pokemon");
+			System.out.println("Charmander, the fire-type Pokemon");
+			System.out.println("Squirtle, the water-type Pokemon");
 			
 			String auxPokemonName = TrainerBattleController.sc.nextLine();
-			if(!auxPokemonName.equals("none") && !auxPokemonName.equals("None")) {
-				if (Pokemon.setPokemon(auxPokemonName, pl) != null)
-					auxPokemons[i] = Pokemon.setPokemon(auxPokemonName, pl);
+			
+			while(!available) {
+				if(auxPokemonName.equals("Bulbasaur") || auxPokemonName.equals("Charmander") || auxPokemonName.equals("Squirtle")) { 
+					auxPokemons[0] = Pokemon.setPokemon(auxPokemonName, pl);
+					available = true;
+				}
 				else {
 					System.out.println("Chosen Pokemon is not available!");
 					System.out.println("Choose another Pokemon!");
-					i--;
+					auxPokemonName = TrainerBattleController.sc.nextLine();
 				}
 			}
-			else {
-				if(i == 0) {
-					System.out.println("Chosen Pokemon is not available!");
-					System.out.println("Choose another Pokemon!");
-					i--;
-				}
-				else {
-					for(int j = i; j < 6; j++)
-						auxPokemons[j] = null; //Creates a null Pokemon 
-					break;
-				}
-			}
+			
+			for(i = 1; i < 6; i++) 
+				auxPokemons[i] = null; //Creates a null Pokemon
+			
+			System.out.println(auxName + ", your new adventure is about enfold!");
+			System.out.println("Embark now on your very own Pokemon adventure!");
+			
+			t = new Trainer(auxName, id, auxPokemons, 1, 1);
+			t.setCurrent(0);
+			return t;	
 		}
-		t = new Trainer(auxName, id, auxPokemons, i, i);
-		t.setCurrent(0);
-		return t;
+		
+		System.out.println("An unexpected error ocurred!");
+		return null;
 	}
 	
 	public String getName() {
@@ -82,6 +121,10 @@ public class Trainer {
 	
 	public Pokemon getPokemon(int i) {
 		return pokemon[i];
+	}
+	
+	public void setPokemon(String name, int i, PokemonList pl) {
+		this.pokemon[i] = Pokemon.setPokemon(name, pl);
 	}
 	
 	public Pokemon getCurrentPokemon() {
@@ -101,7 +144,7 @@ public class Trainer {
 	}
 	
 	public void setNumberOfPokemon(int n) {
-		this.numberOfPokemon = n;
+		numberOfPokemon = n;
 	}
 	
 	public int getActivePokemon() {

@@ -31,27 +31,9 @@ public class TrainerBattleController extends Controller {
 		Event e2 = es.getEvent(1);
 		
 		if(e1.getPriority() > e2.getPriority()) {
-			if(e1.getName() == 'f') {
-				e1.setTrainers(t1, t2);
-				Fight f = (Fight)e1;
-				f.setAttack(t1);
-			}
-			else {
-				e1.setTrainer(t1);
-			}
-			if(e2.getName() == 'f') {
-				e2.setTrainers(t2, t1);
-				Fight f = (Fight)e2;
-				f.setAttack(t2);
-			}
+			e1.setTrainer(t1);
 			
-			e1.action();
-			e1.description();
-			e2.action();
-			e2.description();	
-		}
-		else if (e2.getPriority() > e1.getPriority()) {
-			if(e1.getName() == 'f') {
+			if(e2.getName() == 'f') {
 				e2.setTrainers(t2, t1);
 				Fight f = (Fight)e2;
 				f.setAttack(t2);
@@ -59,6 +41,21 @@ public class TrainerBattleController extends Controller {
 			else {
 				e2.setTrainer(t2);
 			}
+			
+			if(e1.getName() == 'r') {
+				e1.action();
+				e1.description();
+			}
+			else {
+				e1.action();
+				e1.description();
+				e2.action();
+				e2.description();	
+			}
+		}
+		else if (e2.getPriority() > e1.getPriority()) {
+			e2.setTrainer(t2);
+			
 			if(e1.getName() == 'f') {
 				e1.setTrainers(t1, t2);
 				Fight f = (Fight)e1;
@@ -68,19 +65,31 @@ public class TrainerBattleController extends Controller {
 				e1.setTrainer(t1);
 			}
 			
-			e2.action();
-			e2.description();
-			e1.action();
-			e1.description();
+			if(e2.getName() == 'r') {
+				e1.action();
+				e1.description();
+			}
+			else {
+				e1.action();
+				e1.description();
+				e2.action();
+				e2.description();	
+			}
 		}
 		else {
 			e1.setTrainer(t1);
 			e2.setTrainer(t2);
 			
-			e1.action();
-			e1.description();
-			e2.action();
-			e2.description();	
+			if(e1.getName() == 'r') {
+				e1.action();
+				e1.description();
+			}
+			else {
+				e1.action();
+				e1.description();
+				e2.action();
+				e2.description();	
+			}
 		}
 	}
 	
@@ -125,8 +134,8 @@ public class TrainerBattleController extends Controller {
 	}
 	
 	class Fight extends Event {
-		public final char name = 'f';
-		public final int priority = 1;
+		private final char name = 'f';
+		private final int priority = 1;
 		private Attack attack;
 		private int a, damage;
 		private boolean usable = false;
@@ -185,8 +194,8 @@ public class TrainerBattleController extends Controller {
 	}
 	
 	private class Switch extends Event {
-		public final char name = 's';
-		public final int priority = 3;
+		private final char name = 's';
+		private final int priority = 3;
 		private int n, p;
 		private boolean usable = false;
 		private Trainer t;
@@ -226,7 +235,7 @@ public class TrainerBattleController extends Controller {
 					p = getInt(sc);
 				}
 				else if(t.getPokemon(p-1).getCurrentHP() == 0) {
-					System.out.println(t.getPokemon(p-1).getName() + " fainted!");
+					System.out.println(t.getPokemon(p-1).getName() + " can't battle anymore!");
 					System.out.println("Choose another Pokemon!");
 					p = getInt(sc);
 				}
@@ -243,12 +252,12 @@ public class TrainerBattleController extends Controller {
 	}
 	
 	private class Item extends Event {
-		public final char name = 'i';
-		public final int priority = 2;
-		public int item, p;
+		private final char name = 'i';
+		private final int priority = 2;
+		private int item, p;
 		private int pokemon;
-		private boolean usable, available;
-		public Trainer t;
+		private boolean available;
+		private Trainer t;
 		
 		public char getName() {
 			return name;
@@ -272,6 +281,12 @@ public class TrainerBattleController extends Controller {
 			
 			item = getInt(sc);
 			
+			while(item < 1 || item > 3) {
+					System.out.println("Chosen item not available!");
+					System.out.println("Choose another item!");
+					item = getInt(sc);
+			}
+			
 			System.out.println("Which pokemon should be healed?");
 			for(int i = 0; i < t.getNumberOfPokemon(); i++) {
 				System.out.println((i+1) + " " +  t.getPokemon(i).getName());
@@ -281,12 +296,12 @@ public class TrainerBattleController extends Controller {
 			
 			while(!available) {
 				if (pokemon > 0 && pokemon <= t.getNumberOfPokemon()) {
-					if(!t.getPokemon(pokemon - 1).fainted()) {
+					if(!t.getPokemon(pokemon-1).fainted()) {
 						p = pokemon -1;
 						available = true;
 					}
 					else {
-						System.out.println("Chosen Pokemon cannot battle anymore!");
+						System.out.println("Chosen Pokemon can't battle anymore!");
 						System.out.println("Choose another Pokemon");
 						pokemon = getInt(sc);
 					}		
@@ -298,25 +313,12 @@ public class TrainerBattleController extends Controller {
 				}
 			}
 			
-			while (!usable) {
-				if (item == 1) {
-					Bag.useItem("potion", t.getPokemon(p));
-					usable = true;
-				}
-				else if (item == 2) {
+			if (item == 1) 
+				Bag.useItem("potion", t.getPokemon(p));
+			else if (item == 2) 
 					Bag.useItem("super potion", t.getPokemon(p));
-					usable = true;
-				}
-				else if (item == 3) {
+			else if (item == 3) 
 					Bag.useItem("hyper potion", t.getPokemon(p));
-					usable = true;
-				}
-				else {
-					System.out.println("Chosen item not available!");
-					System.out.println("Choose another item!");
-					item = getInt(sc);
-				}
-			}
 		}
 		
 		public void description() {
@@ -332,9 +334,9 @@ public class TrainerBattleController extends Controller {
 	}
 	
 	private class Run extends Event {
-		public final char name = 'r';
-		public final int priority = 4;
-		public Trainer t;
+		private final char name = 'r';
+		private final int priority = 4;
+		private Trainer t;
 		
 		public char getName() {
 			return name;
@@ -410,8 +412,8 @@ public class TrainerBattleController extends Controller {
 		
 		TrainerBattleController bc = new TrainerBattleController();
 		
-		bc.t1 = Trainer.createTrainer(1, pl);
-		bc.t2 = Trainer.createTrainer(2, pl);
+		bc.t1 = Trainer.createTrainer(1, pl, 0);
+		bc.t2 = Trainer.createTrainer(2, pl, 0);
 		
 		while(!finished) {
 			char auxOpt1;
@@ -503,7 +505,7 @@ public class TrainerBattleController extends Controller {
 			
 			if(bc.t1.activePokemonFainted()) {
 				if(bc.t1.getActivePokemon() > 0) {
-					System.out.println("Trainer " + bc.t1.getName() + ", you need to choose another pokemon!");
+					System.out.println("Trainer " + bc.t1.getName() + ", you need to choose another Pokemon!");
 					bc.setOptions('s');
 					bc.setOptions('0');
 					bc.run();
@@ -516,7 +518,7 @@ public class TrainerBattleController extends Controller {
 			
 			if(bc.t2.activePokemonFainted()) {
 				if(bc.t2.getActivePokemon() > 0) {
-					System.out.println("Trainer " + bc.t2.getName() + " you need to choose another pokemon!");
+					System.out.println("Trainer " + bc.t2.getName() + " you need to choose another Pokemon!");
 					bc.setOptions('0');
 					bc.setOptions('s');
 					bc.run();

@@ -17,11 +17,12 @@ public class Pokemon {
 	private final int type1Num, type2Num;
 	private final int maxHP, atk, def, spatk, spdef, spe;
 	private int currentHP;
+	private final int catchRate;
 	public final Attack[] attack = new Attack[4];
 	private boolean fainted = false;
 	
 	public Pokemon (String name, int dexNum, String type1, String type2, int type1Num, int type2Num, int HP,
-					int atk, int def, int spatk, int spdef, int spe, Attack attack1, Attack attack2,  
+					int atk, int def, int spatk, int spdef, int spe, int catchRate, Attack attack1, Attack attack2,  
 					Attack attack3,  Attack attack4) {
 		this.name = name;
 		this.dexNum = dexNum;
@@ -36,6 +37,7 @@ public class Pokemon {
 		this.spatk = spatk;
 		this.spdef = spdef;
 		this.spe = spe;
+		this.catchRate = catchRate;
 		this.attack[0] = attack1;
 		this.attack[1] = attack2;
 		this.attack[2] = attack3;
@@ -98,6 +100,10 @@ public class Pokemon {
 		return spe;
 	}
 	
+	public int getCatchRate() {
+		return catchRate;
+	}
+	
 	public boolean fainted() {
 		if(this.currentHP <= 0) {
 			System.out.println(this.name + " fainted!");
@@ -140,15 +146,15 @@ public class Pokemon {
 			
 		if (attack.getCategory().equals("p")) {
 			int power = attack.getPower();
-			int atk = this.getAtk();
-			int def = defender.getDef();
+			double atk = this.getAtk();
+			double def = defender.getDef();
 			damage = ((((22)*power*(atk/def))/50)+2)*modifier*stab;
 			return (int)damage;
 		}
 		
 		int power = attack.getPower();
-		int spatk = this.getSpAtk();
-		int spdef = defender.getSpDef(); 
+		double spatk = this.getSpAtk();
+		double spdef = defender.getSpDef(); 
 		damage = ((((22)*power*(spatk/spdef))/50)+2)*modifier*stab;
 		return (int)damage;
 	}
@@ -169,10 +175,14 @@ public class Pokemon {
 			}
 			pokemon = new Pokemon(pl.names[i], pl.dexNum[i], pl.types[i][0], pl.types[i][1], pl.attackTypeNum[i][0],
 				  pl.attackTypeNum[i][1], pl.stats[i][0], pl.stats[i][1], pl.stats[i][2], pl.stats[i][3], pl.stats[i][4], 
-				  pl.stats[i][5], attacks[0], attacks[1], attacks[2], attacks[3]);
+				  pl.stats[i][5], pl.catchRate[i], attacks[0], attacks[1], attacks[2], attacks[3]);
 			return pokemon;
 		}
 		return null;
+	}
+
+	public void revive() {
+		fainted = false;
 	}	
 }
 
@@ -224,11 +234,19 @@ class Attack {
 		if(name.equals("TakeDown")) {
 			p.takeDamage(damage/4);
 			System.out.println(p.getName() + " lost some of its HP due to recoil");
+			return;
 		}
 		
 		if(name.equals("DoubleEdge")) {
 			p.takeDamage(damage/3);
 			System.out.println(p.getName() + " lost some of its HP due to recoil");
+			return;
+		}
+		
+		if(name.contentEquals("FlareBlitz")) {
+			p.takeDamage(damage/3);
+			System.out.println(p.getName() + " lost some of its HP due to recoil");
+			return;
 		}
 	}
 	
@@ -238,16 +256,19 @@ class Attack {
 		if(name.equals("Absorb")) {
 			p.setCurrentHP(p.getCurrentHP()+(damage/2));
 			System.out.println(p.getName() + " restored some of its HP");
+			return;
 		}
 		
 		if(name.equals("MegaDrain")) {
 			p.setCurrentHP(p.getCurrentHP()+(damage/2));
 			System.out.println(p.getName() + " restored some of its HP");
+			return;
 		}
 		
 		if(name.equals("GigaDrain")) {
 			p.setCurrentHP(p.getCurrentHP()+(damage/2));
 			System.out.println(p.getName() + " restored some of its HP");
+			return;
 		}
 	}
 }

@@ -1,6 +1,16 @@
+/*********************************************************/
+/** 						                            **/
+/** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
+/**			 Bruno Macedo Sanches        NUSP: 10770263 **/
+/**                                                     **/
+/** Professor: Marcelo Finger                           **/
+/** Lista 06 - Exercicio 02                             **/
+/**                                                     **/
+/*********************************************************/
+
 package br.ime.usp.lista06.batalhapokemon;
+
 import java.lang.System;
-import java.util.Scanner;
 import java.util.Random;
 
 //Run -> Run configurations -> Common -> Other ->UTF-8
@@ -68,6 +78,7 @@ public class Map {
 			||( direction == 's' && t.getPosition()[0] == sizeOfMap[0] - 1)
 			||(direction == 'a' && t.getPosition()[1] == 0)
 			||(direction == 'd' && t.getPosition()[1] == sizeOfMap[1] - 1)) {
+			System.out.println(t.getName() + ", you tried to step out of the map!");
 			return false;
 		}
 		else {
@@ -89,8 +100,8 @@ public class Map {
 	
 	public boolean hasPokemon(Trainer t) {
 		if (isGrass(t.getPosition())) {
-			Random gerador = new Random(System.currentTimeMillis());
-			int rand = gerador.nextInt(10);
+			Random generator = new Random(System.currentTimeMillis());
+			int rand = generator.nextInt(10);
 			if (rand <= probability)
 				return true;
 			else
@@ -102,8 +113,8 @@ public class Map {
 	
 	static Pokemon getWildPokemon(PokemonList pl) {
 		int numberOfPokemons = pl.names.length;
-		Random gerador = new Random(System.currentTimeMillis());
-		int rand = gerador.nextInt(numberOfPokemons);
+		Random generator = new Random(System.currentTimeMillis());
+		int rand = generator.nextInt(numberOfPokemons);
 		Pokemon wild = Pokemon.setPokemon(pl.names[rand] , pl);
 		return wild;
 	}
@@ -112,11 +123,11 @@ public class Map {
 		PokemonList pl = new PokemonList();
 		Map mapa = new Map();
 		Pokemon wild;
-		Trainer t = Trainer.createTrainer(0, pl);
+		Trainer t = Trainer.createTrainer(0, pl, 0);
 		char dir;
 		mapa.printActualMap();
 		dir = TrainerBattleController.sc.next().charAt(0);
-		while(mapa.move(t,  dir)) {
+		while(mapa.move(t, dir)) {
 			mapa.printActualMap();
 			if(mapa.hasPokemon(t)) {
 				wild = getWildPokemon(pl);
@@ -127,5 +138,4 @@ public class Map {
 		System.out.println("You walked away from the map");
 		mapa.printOriginalMap();
 	}
-	
 }

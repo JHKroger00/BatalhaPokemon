@@ -11,11 +11,16 @@
 package br.ime.usp.lista06.batalhapokemon;
 
 import java.util.Scanner;
+import java.lang.Math;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class WildBattleController extends Controller {
-	public Trainer t1, t2;
+	public Trainer t;
+	public Pokemon wildPokemon;
 	private TypeChart tc = new TypeChart();
+	private Map map = new Map();
 	public static Scanner sc = new Scanner(System.in);
+	public boolean caught = false;
 	
 	public static int getInt(Scanner s) {
 		while(!s.hasNextInt()) {
@@ -31,56 +36,54 @@ public class WildBattleController extends Controller {
 		Event e2 = es.getEvent(1);
 		
 		if(e1.getPriority() > e2.getPriority()) {
-			if(e1.getName() == 'f') {
-				e1.setTrainers(t1, t2);
-				Fight f = (Fight)e1;
-				f.setAttack(t1);
-			}
-			else {
-				e1.setTrainer(t1);
-			}
+			if(e1.getName() != 'f')
+				e1.setTrainer(t);
+			else
+				e1.setBattle(t, wildPokemon);
+			
+			if(e1.getName() == 'c')
+				e1.setPokemon(wildPokemon);
+			
+			e2.setBattle(t, wildPokemon);
+			//Fight f = (Fight)e2;
+			
 			if(e2.getName() == 'f') {
-				e2.setTrainers(t2, t1);
 				Fight f = (Fight)e2;
-				f.setAttack(t2);
+				f.setAttack(wildPokemon);
 			}
 			
-			e1.action();
-			e1.description();
-			e2.action();
-			e2.description();	
+			
+			if(e1.getName() == 'r' || e2.getName() == 'n') {
+				e1.action();
+				e1.description();
+			}
+			else {
+				e1.action();
+				e1.description();
+				((Fight)e2).action(wildPokemon);
+				((Fight)e2).description(wildPokemon);	
+			}
 		}
-		else if (e2.getPriority() > e1.getPriority()) {
+		else if (e2.getPriority() > e1.getPriority()) {			
 			if(e1.getName() == 'f') {
-				e2.setTrainers(t2, t1);
-				Fight f = (Fight)e2;
-				f.setAttack(t2);
-			}
-			else {
-				e2.setTrainer(t2);
-			}
-			if(e1.getName() == 'f') {
-				e1.setTrainers(t1, t2);
+				e1.setBattle(t, wildPokemon);
 				Fight f = (Fight)e1;
-				f.setAttack(t1);
+				f.setAttack(t);
 			}
 			else {
-				e1.setTrainer(t1);
+				e1.setTrainer(t);
+				if(e1.getName() == 'c')
+					e1.setPokemon(wildPokemon);
 			}
 			
-			e2.action();
-			e2.description();
-			e1.action();
-			e1.description();
+			((Run)e2).action();
+			((Run)e2).description(wildPokemon);
 		}
 		else {
-			e1.setTrainer(t1);
-			e2.setTrainer(t2);
+			e1.setTrainer(t);
 			
 			e1.action();
 			e1.description();
-			e2.action();
-			e2.description();	
 		}
 	}
 	
@@ -90,34 +93,34 @@ public class WildBattleController extends Controller {
 		Fight e2 = (Fight)es.getEvent(1);
 		Attack a1, a2;
 		
-		a1 = e1.setAttack(t1);
-		a2 = e2.setAttack(t2);
+		a1 = e1.setAttack(t);
+		a2 = e2.setAttack(wildPokemon);
 		
-		e1.setTrainers(t1, t2);
-		e2.setTrainers(t2, t1);
+		e1.setBattle(t, wildPokemon);
+		e2.setBattle(t, wildPokemon);
 		
 		if(a1.getPriority() > a2.getPriority()) {
 			e1.action();
 			e1.description();
-			e2.action();
-			e2.description();	
+			((Fight)e2).action(wildPokemon);
+			((Fight)e2).description(wildPokemon);	
 		}
 		else if (a2.getPriority() > a1.getPriority()) {
-			e2.action();
-			e2.description();
+			((Fight)e2).action(wildPokemon);
+			((Fight)e2).description(wildPokemon);
 			e1.action();
 			e1.description();
 		}
 		else {
-			if(t1.getCurrentPokemon().getSpe() > t2.getCurrentPokemon().getSpe()) {
+			if(t.getCurrentPokemon().getSpe() > wildPokemon.getSpe()) {
 				e1.action();
 				e1.description();
-				e2.action();
-				e2.description();
+				((Fight)e2).action(wildPokemon);
+				((Fight)e2).description(wildPokemon);
 			}
 			else {
-				e2.action();
-				e2.description();
+				((Fight)e2).action(wildPokemon);
+				((Fight)e2).description(wildPokemon);
 				e1.action();
 				e1.description();
 			}
@@ -125,12 +128,13 @@ public class WildBattleController extends Controller {
 	}
 	
 	class Fight extends Event {
-		public final char name = 'f';
-		public final int priority = 1;
+		private final char name = 'f';
+		private final int priority = 1;
 		private Attack attack;
 		private int a, damage;
 		private boolean usable = false;
-		private Trainer attacker, defender;
+		private Trainer t;
+		private Pokemon wildPokemon;
 		
 		public char getName() {
 			return name;
@@ -141,9 +145,9 @@ public class WildBattleController extends Controller {
 		}
 		
 		@Override
-		public void setTrainers(Trainer t1, Trainer t2) {
-			this.attacker = t1;
-			this.defender = t2;
+		public void setBattle(Trainer t, Pokemon p) {
+			this.t = t;
+			this.wildPokemon = p;
 		}
 		
 		public Attack setAttack(Trainer t) {
@@ -167,26 +171,41 @@ public class WildBattleController extends Controller {
 			return this.attack;
 		}
 		
+		public Attack setAttack(Pokemon p) {
+			a = ThreadLocalRandom.current().nextInt(0, 4);
+			this.attack = p.attack[a];
+			return this.attack;
+		}
+		
 		public void action() {
-			Pokemon currentAttacker = attacker.getCurrentPokemon();
-			Pokemon currentDefender = defender.getCurrentPokemon();
+			Pokemon currentAttacker = t.getCurrentPokemon();
 			attack = currentAttacker.attack[a-1];
 			
-			damage = currentAttacker.attackPokemon(attack, currentDefender, tc); 
-			currentDefender.takeDamage(damage);
+			damage = currentAttacker.attackPokemon(attack, wildPokemon, tc); 
+			wildPokemon.takeDamage(damage);
 			attack.hurtsUser(attack, currentAttacker, damage);
 			attack.healsUser(attack, currentAttacker, damage);
 		}
 		
 		public void description() {
-			System.out.println(attacker.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
+			System.out.println(t.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
 		}
 		
+		public void action(Pokemon p) {			
+			damage = p.attackPokemon(attack, t.getCurrentPokemon(), tc); 
+			t.getCurrentPokemon().takeDamage(damage);
+			attack.hurtsUser(attack, p, damage);
+			attack.healsUser(attack, p, damage);
+		}
+		
+		public void description(Pokemon p) {
+			System.out.println(p.getName() + " used " + attack.getName() + "!");
+		}
 	}
 	
 	private class Switch extends Event {
-		public final char name = 's';
-		public final int priority = 3;
+		private final char name = 's';
+		private final int priority = 3;
 		private int n, p;
 		private boolean usable = false;
 		private Trainer t;
@@ -226,7 +245,7 @@ public class WildBattleController extends Controller {
 					p = getInt(sc);
 				}
 				else if(t.getPokemon(p-1).getCurrentHP() == 0) {
-					System.out.println(t.getPokemon(p-1).getName() + " fainted!");
+					System.out.println(t.getPokemon(p-1).getName() + " can't battle anymore!");
 					System.out.println("Choose another Pokemon!");
 					p = getInt(sc);
 				}
@@ -243,12 +262,12 @@ public class WildBattleController extends Controller {
 	}
 	
 	private class Item extends Event {
-		public final char name = 'i';
-		public final int priority = 2;
-		public int item, p;
+		private final char name = 'i';
+		private final int priority = 2;
+		private int item, p;
 		private int pokemon;
-		private boolean usable, available;
-		public Trainer t;
+		private boolean available;
+		private Trainer t;
 		
 		public char getName() {
 			return name;
@@ -272,6 +291,12 @@ public class WildBattleController extends Controller {
 			
 			item = getInt(sc);
 			
+			while(item < 1 || item > 3) {
+				System.out.println("Chosen item not available!");
+				System.out.println("Choose another item!");
+				item = getInt(sc);
+			}
+			
 			System.out.println("Which pokemon should be healed?");
 			for(int i = 0; i < t.getNumberOfPokemon(); i++) {
 				System.out.println((i+1) + " " +  t.getPokemon(i).getName());
@@ -286,7 +311,7 @@ public class WildBattleController extends Controller {
 						available = true;
 					}
 					else {
-						System.out.println("Chosen Pokemon cannot battle anymore!");
+						System.out.println("Chosen Pokemon can't battle anymore!");
 						System.out.println("Choose another Pokemon");
 						pokemon = getInt(sc);
 					}		
@@ -298,25 +323,12 @@ public class WildBattleController extends Controller {
 				}
 			}
 			
-			while (!usable) {
-				if (item == 1) {
-					Bag.useItem("potion", t.getPokemon(p));
-					usable = true;
-				}
-				else if (item == 2) {
+			if (item == 1) 
+				Bag.useItem("potion", t.getPokemon(p));
+			else if (item == 2) 
 					Bag.useItem("super potion", t.getPokemon(p));
-					usable = true;
-				}
-				else if (item == 3) {
+			else if (item == 3) 
 					Bag.useItem("hyper potion", t.getPokemon(p));
-					usable = true;
-				}
-				else {
-					System.out.println("Chosen item not available!");
-					System.out.println("Choose another item!");
-					item = getInt(sc);
-				}
-			}
 		}
 		
 		public void description() {
@@ -328,6 +340,64 @@ public class WildBattleController extends Controller {
 			case 3 :
 				System.out.println(t.getName() + " used a hyperpotion!");
 			}
+		}	
+	}
+	
+	private class Catch extends Event {
+		private final char name = 'c';
+		private final int priority = 2;
+		private int b;
+		private double ball;
+		private Pokemon p;
+		
+		public char getName() {
+			return name;
+		}
+		
+		public int getPriority() {
+			return priority;
+		}
+		
+		@Override
+		public void setPokemon(Pokemon p) {
+			this.p = p;
+		}
+		
+		public void action() {
+			int a, m;
+			
+			System.out.println("Choose poke ball:");
+			System.out.println("1 - Poke ball");
+			System.out.println("2 - Great ball");
+			System.out.println("3 - Ultra ball");
+			
+			b = getInt(sc);
+			
+			while(b < 1 || b > 3) {
+				System.out.println("Chosen poke ball not available!");
+				System.out.println("Choose another poke ball!");
+				b = getInt(sc);
+			}
+			
+			if (b == 1) 
+				ball = 1.0;
+			else if (b == 2)
+				ball = 1.5;
+			else 
+				ball = 2.0;
+			
+			a = (int)Math.floor(((double)((3*p.getMaxHP())-(2*p.getCurrentHP()))*p.getCatchRate()*ball)/((double)3*p.getMaxHP()));
+			m = ThreadLocalRandom.current().nextInt(0, 256);
+			
+			if(a >= m) 
+				caught = true;			
+		}
+		
+		public void description() {
+			if (caught)
+				System.out.println("Gotcha! " + p.getName() + " was caught!");
+			else
+				System.out.println("Oh, no! The Pokémon broke free!");
 		}	
 	}
 	
@@ -354,7 +424,11 @@ public class WildBattleController extends Controller {
 		}
 		
 		public void description() {
-			System.out.println("Trainer " + t.getName() + " ran away safely!");
+			System.out.println(t.getName() + " ran away safely!");
+		}
+		
+		public void description(Pokemon p) {
+			System.out.println("The wild " + p.getName() + " fled away!");
 		}
 	}
 	
@@ -379,9 +453,10 @@ public class WildBattleController extends Controller {
 	}
 	
 	public static void printOptions() {
-		System.out.println("f - attack the opponent");
+		System.out.println("f - attack the wild pokemon");
 		System.out.println("s - switch your pokemon");
 		System.out.println("i - use a healing potion");
+		System.out.println("c - catch the wild pokemon");
 		System.out.println("r - run away from battle");
 	}
 	
@@ -399,8 +474,198 @@ public class WildBattleController extends Controller {
 		case 'f':
 			this.addEvent(new Fight());
 			break;
-		default:
+		case 'c':
+			this.addEvent(new Catch());
+		case 'n':
 			this.addEvent(new nullEvent());
 		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		PokemonList pl = new PokemonList();
+		char dir;
+		boolean finished = false;
+		
+		WildBattleController bc = new WildBattleController();
+		
+		bc.t = Trainer.createTrainer(1, pl, 1);
+		
+		System.out.println("\nTrainer, use the following commands to move through the map:");
+		System.out.println("w - move in the up direction");
+		System.out.println("a - move in the left direction");
+		System.out.println("s - move in the down direction");
+		System.out.println("d - move in the right direction");
+		System.out.println("q - quit your current adventure");
+		
+		bc.map.printActualMap();
+		
+		dir = sc.next().charAt(0);
+		
+		while(dir != 'w' && dir != 'a' && dir != 's' && dir != 'd' && dir != 'q') {
+			System.out.println("This is not an available command! Select another one!");
+			dir = sc.next().charAt(0);
+		}
+		
+		while(dir != 'q') {
+			if(!bc.map.move(bc.t, dir)) {
+				System.out.println("This is not an available command! Select another one!");
+				dir = sc.next().charAt(0);
+			}
+			else {
+				bc.map.printActualMap();
+				if(bc.map.hasPokemon(bc.t)) {
+					bc.wildPokemon = Map.getWildPokemon(pl);
+					System.out.println("A wild " + bc.wildPokemon.getName() + " appeared!");
+					
+					while(!finished) {
+						char auxOpt1;
+						char auxOpt2;
+						Pokemon pokemon = bc.t.getCurrentPokemon();
+						int move;
+						
+						System.out.println(bc.t.getName() + "'s " + pokemon.getName() + ": " 
+								+ pokemon.getCurrentHP() + "/" + pokemon.getMaxHP() + " HP");
+						
+						System.out.println(bc.wildPokemon.getName() + ": " 
+								+ bc.wildPokemon.getCurrentHP() + "/" + bc.wildPokemon.getMaxHP() + " HP");
+						
+						System.out.println("Trainer " + bc.t.getName() + ", choose your move:");
+						printOptions();
+						auxOpt1 = sc.next().charAt(0);
+						
+						while(auxOpt1 != 'f' && auxOpt1 != 's' && auxOpt1 != 'i' && auxOpt1 != 'r' && auxOpt1 != 'c') {
+							System.out.println("This is not an available option! Select another one!");
+							auxOpt1 = sc.next().charAt(0);
+						}
+						
+						while(auxOpt1 == 's' && bc.t.getNumberOfPokemon() == 1) {
+							System.out.println("Trainer " + bc.t.getName() + ", you only have one Pokemon!" +
+												" You can't switch it out!");
+							System.out.println("Select another option!");
+							auxOpt1 = sc.next().charAt(0);
+						}
+						
+						while(auxOpt1 == 'i') {
+							boolean check = false;
+							int p = 0;
+							for(int i = 0; i < bc.t.getNumberOfPokemon(); i++) {
+								if (bc.t.getPokemon(i).getCurrentHP() == bc.t.getPokemon(i).getMaxHP())
+									p++;
+							}
+							if(p == bc.t.getActivePokemon()) {
+								System.out.println("Trainer " + bc.t.getName() + ", all your active Pokemon are at max HP!" +
+													" You can't use a potion on any of them!");
+								System.out.println("Select another option!");
+								auxOpt1 = sc.next().charAt(0);
+								check = true;
+							}
+							if(!check)
+								break;
+						}
+						
+						move = ThreadLocalRandom.current().nextInt(0, 256);
+						
+						if(move < 255)
+							auxOpt2 = 'f';
+						else
+							auxOpt2 = 'c';
+						
+						bc.setOptions(auxOpt1);
+						bc.setOptions(auxOpt2);
+						
+						if (auxOpt1 == 'f' && auxOpt2 == 'f') 
+							bc.runFight();
+						else 	
+							bc.run();
+						
+						if(bc.t.activePokemonFainted()) {
+							if(bc.t.getActivePokemon() > 0) {
+								System.out.println("Trainer " + bc.t.getName() + ", you need to choose another Pokemon!");
+								bc.setOptions('s');
+								bc.setOptions('0');
+								bc.run();
+							}
+							else {
+								finished = true;
+								System.out.println(bc.t.getName() + " is out of usable Pokemon!");
+								System.out.println(bc.t.getName() + " blacked out!");
+								System.out.println(bc.t.getName() + " ushered to the nearest Pokemon Center, and was able to "
+												   + "recover all the fainted Pokemon back to full health...");
+								for(int i = 0; i < bc.t.getNumberOfPokemon(); i++) {
+									bc.t.getPokemon(i).setCurrentHP(bc.t.getPokemon(i).getMaxHP());
+									bc.t.getPokemon(i).revive();
+								}
+							}
+						}
+						if(bc.wildPokemon.fainted()) {
+							finished = true;
+							System.out.println(bc.wildPokemon.getName() + " fainted. You won the battle!!");
+						}
+						
+						if(auxOpt1 == 'c') {
+							if(bc.caught) {
+								finished = true;
+								if(bc.t.getNumberOfPokemon() == 6) {
+									int answer, p;
+									System.out.println("Trainer " + bc.t.getName() + ", your party is full!");
+									System.out.println("Would you like to replace one of your current pokemon with the one you "
+														+ "just caught?");
+									System.out.println("1 - Yes");
+									System.out.println("2 - No");
+									answer = getInt(sc);
+									
+									while(answer < 1 || answer > 2) {
+										System.out.println("Chosen option is not available!");
+										System.out.println("Select another one!");
+										answer = getInt(sc);
+									}
+									
+									if(answer == 1) {
+										System.out.println("Which pokemon should be replaced?");
+										for(int i = 0; i < bc.t.getNumberOfPokemon(); i++) {
+											System.out.println((i+1) + " " +  bc.t.getPokemon(i).getName());
+										}
+										p = getInt(sc);
+										
+										while(p < 1 || p > bc.t.getNumberOfPokemon()) {
+											System.out.println("Chosen Pokemon is not available!");
+											System.out.println("Choose another Pokemon");
+											p = getInt(sc);
+										}
+										bc.t.setPokemon(bc.wildPokemon.getName(), p-1, pl);
+									}
+									if(answer == 2) {
+										System.out.println(bc.wildPokemon.getName() + " was transferred to the BOX in the PC");
+									}
+								}
+								else {
+									bc.t.setPokemon(bc.wildPokemon.getName(), bc.t.getNumberOfPokemon(), pl);
+									bc.t.setNumberOfPokemon(bc.t.getNumberOfPokemon() + 1);
+									System.out.println(bc.wildPokemon.getName() + "was added to your party");
+								}
+							}
+							for(int i = 0; i < bc.t.getNumberOfPokemon(); i++)
+								bc.t.getPokemon(i).setCurrentHP(bc.t.getPokemon(i).getMaxHP());
+							bc.caught = false;
+						}
+						
+						if(auxOpt1 == 'r') {
+							finished = true;
+							for(int i = 0; i < bc.t.getNumberOfPokemon(); i++)
+								bc.t.getPokemon(i).setCurrentHP(bc.t.getPokemon(i).getMaxHP());
+						}
+						
+						else if(auxOpt2 == 'r') {
+							finished = true;
+						}
+					}
+					finished = false;
+				}
+				bc.map.printActualMap();
+				dir = TrainerBattleController.sc.next().charAt(0);
+			}
+		}
+		
+		System.out.println("Trainer " + bc.t.getName() + ", your Pokemon adventure has ended!");
 	}
 }

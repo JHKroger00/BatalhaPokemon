@@ -27,5 +27,12 @@ public abstract class Event {
 	public void setTrainer(Trainer t) {
 		// This method is used for the other kinds of events
 	}
-		 
+	
+	public void setBattle(Trainer t, Pokemon p) {
+		// This method is used to set a battle against a wild pokémon
+	}
+	
+	public void setPokemon(Pokemon p) {
+		
+	}
 }
