@@ -61,13 +61,13 @@ Deve-se escolher o nome dos treinadores e os seus pokemons, os pokemons disponí
 
 28 Sandslash 
 
-29 Nidoran
+29 Nidoran♀
 
 30 Nidorina 
 
 31 Nidoqueen 
 
-32 Nidoran
+32 Nidoran♂
 
 33 Nidorino 
 
