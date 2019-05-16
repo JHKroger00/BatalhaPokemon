@@ -36,22 +36,13 @@ public class WildBattleController extends Controller {
 		Event e2 = es.getEvent(1);
 		
 		if(e1.getPriority() > e2.getPriority()) {
-			if(e1.getName() != 'f')
-				e1.setTrainer(t);
-			else
-				e1.setBattle(t, wildPokemon);
-			
+			e1.setTrainer(t);
 			if(e1.getName() == 'c')
 				e1.setPokemon(wildPokemon);
 			
 			e2.setBattle(t, wildPokemon);
-			//Fight f = (Fight)e2;
-			
-			if(e2.getName() == 'f') {
-				Fight f = (Fight)e2;
-				f.setAttack(wildPokemon);
-			}
-			
+			Fight f = (Fight)e2;
+			f.setAttack(wildPokemon);
 			
 			if(e1.getName() == 'r' || e2.getName() == 'n') {
 				e1.action();
@@ -60,8 +51,10 @@ public class WildBattleController extends Controller {
 			else {
 				e1.action();
 				e1.description();
-				((Fight)e2).action(wildPokemon);
-				((Fight)e2).description(wildPokemon);	
+				if(!caught) {
+					((Fight)e2).action(wildPokemon);
+					((Fight)e2).description(wildPokemon);
+				}
 			}
 		}
 		else if (e2.getPriority() > e1.getPriority()) {			
@@ -102,27 +95,35 @@ public class WildBattleController extends Controller {
 		if(a1.getPriority() > a2.getPriority()) {
 			e1.action();
 			e1.description();
-			((Fight)e2).action(wildPokemon);
-			((Fight)e2).description(wildPokemon);	
+			if(!wildPokemon.fainted()) {
+				((Fight)e2).action(wildPokemon);
+				((Fight)e2).description(wildPokemon);
+			}	
 		}
 		else if (a2.getPriority() > a1.getPriority()) {
 			((Fight)e2).action(wildPokemon);
 			((Fight)e2).description(wildPokemon);
-			e1.action();
-			e1.description();
+			if(!t.getCurrentPokemon().fainted()) {
+				e1.action();
+				e1.description();
+			}
 		}
 		else {
 			if(t.getCurrentPokemon().getSpe() > wildPokemon.getSpe()) {
 				e1.action();
 				e1.description();
-				((Fight)e2).action(wildPokemon);
-				((Fight)e2).description(wildPokemon);
+				if(!wildPokemon.fainted()) {
+					((Fight)e2).action(wildPokemon);
+					((Fight)e2).description(wildPokemon);
+				}
 			}
 			else {
 				((Fight)e2).action(wildPokemon);
 				((Fight)e2).description(wildPokemon);
-				e1.action();
-				e1.description();
+				if(!t.getCurrentPokemon().fainted()) {
+					e1.action();
+					e1.description();
+				}
 			}
 		}		
 	}
@@ -132,6 +133,7 @@ public class WildBattleController extends Controller {
 		private final int priority = 1;
 		private Attack attack;
 		private int a, damage;
+		private double modifier;
 		private boolean usable = false;
 		private Trainer t;
 		private Pokemon wildPokemon;
@@ -142,6 +144,14 @@ public class WildBattleController extends Controller {
 		
 		public int getPriority() {
 			return priority;
+		}
+		
+		private boolean comparesDouble (double x, double y) {
+			double epsilon = 0.1;
+			
+			if (x-y < epsilon && y-x < epsilon) 
+				return true;
+			return false;
 		}
 		
 		@Override
@@ -181,14 +191,33 @@ public class WildBattleController extends Controller {
 			Pokemon currentAttacker = t.getCurrentPokemon();
 			attack = currentAttacker.attack[a-1];
 			
+			modifier = tc.typeChart[attack.getTypeNum()][wildPokemon.getType1Num()]*
+			          tc.typeChart[attack.getTypeNum()][wildPokemon.getType2Num()];
+			
 			damage = currentAttacker.attackPokemon(attack, wildPokemon, tc); 
 			wildPokemon.takeDamage(damage);
-			attack.hurtsUser(attack, currentAttacker, damage);
-			attack.healsUser(attack, currentAttacker, damage);
+			if(attack.hurtsUser(attack, currentAttacker, damage)) {
+				System.out.println(currentAttacker.getName() + " lost some of its HP due to recoil");
+			}
+			if(attack.healsUser(attack, currentAttacker, damage)){
+				System.out.println(currentAttacker.getName() + " restored some of its HP");
+			}
 		}
 		
 		public void description() {
 			System.out.println(t.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
+			
+			if(comparesDouble(modifier, 0.0)) {
+				System.out.println(attack.getName() + "does not affect" + wildPokemon.getName() + "...");
+			}
+			
+			if(comparesDouble(modifier, 0.25) || comparesDouble(modifier, 0.5)) {
+				System.out.println("It's not very effective...");
+			}
+			
+			if(comparesDouble(modifier, 2.0) || comparesDouble(modifier, 4.0)) {
+				System.out.println("It's super effective!");
+			}
 		}
 		
 		public void action(Pokemon p) {			
@@ -387,7 +416,7 @@ public class WildBattleController extends Controller {
 				ball = 2.0;
 			
 			a = (int)Math.floor(((double)((3*p.getMaxHP())-(2*p.getCurrentHP()))*p.getCatchRate()*ball)/((double)3*p.getMaxHP()));
-			m = ThreadLocalRandom.current().nextInt(0, 256);
+			m = ThreadLocalRandom.current().nextInt(0, 128);
 			
 			if(a >= m) 
 				caught = true;			
@@ -397,7 +426,7 @@ public class WildBattleController extends Controller {
 			if (caught)
 				System.out.println("Gotcha! " + p.getName() + " was caught!");
 			else
-				System.out.println("Oh, no! The Pokémon broke free!");
+				System.out.println("Oh, no! The Pokï¿½mon broke free!");
 		}	
 	}
 	
@@ -476,7 +505,8 @@ public class WildBattleController extends Controller {
 			break;
 		case 'c':
 			this.addEvent(new Catch());
-		case 'n':
+			break;
+		default:
 			this.addEvent(new nullEvent());
 		}
 	}
@@ -511,6 +541,7 @@ public class WildBattleController extends Controller {
 				System.out.println("This is not an available command! Select another one!");
 				dir = sc.next().charAt(0);
 			}
+			
 			else {
 				bc.map.printActualMap();
 				if(bc.map.hasPokemon(bc.t)) {
@@ -568,7 +599,7 @@ public class WildBattleController extends Controller {
 						if(move < 255)
 							auxOpt2 = 'f';
 						else
-							auxOpt2 = 'c';
+							auxOpt2 = 'r';
 						
 						bc.setOptions(auxOpt1);
 						bc.setOptions(auxOpt2);
@@ -579,6 +610,8 @@ public class WildBattleController extends Controller {
 							bc.run();
 						
 						if(bc.t.activePokemonFainted()) {
+							System.out.println(bc.t.getCurrentPokemon().getName() + " fainted!");
+							
 							if(bc.t.getActivePokemon() > 0) {
 								System.out.println("Trainer " + bc.t.getName() + ", you need to choose another Pokemon!");
 								bc.setOptions('s');
@@ -591,17 +624,16 @@ public class WildBattleController extends Controller {
 								System.out.println(bc.t.getName() + " blacked out!");
 								System.out.println(bc.t.getName() + " ushered to the nearest Pokemon Center, and was able to "
 												   + "recover all the fainted Pokemon back to full health...");
-								for(int i = 0; i < bc.t.getNumberOfPokemon(); i++) {
+								for(int i = 0; i < bc.t.getNumberOfPokemon(); i++)
 									bc.t.getPokemon(i).setCurrentHP(bc.t.getPokemon(i).getMaxHP());
-									bc.t.getPokemon(i).revive();
-								}
 							}
 						}
+						
 						if(bc.wildPokemon.fainted()) {
 							finished = true;
-							System.out.println(bc.wildPokemon.getName() + " fainted. You won the battle!!");
+							System.out.println("The wild " + bc.wildPokemon.getName() + " fainted!");
 						}
-						
+ 						
 						if(auxOpt1 == 'c') {
 							if(bc.caught) {
 								finished = true;
@@ -633,6 +665,7 @@ public class WildBattleController extends Controller {
 											p = getInt(sc);
 										}
 										bc.t.setPokemon(bc.wildPokemon.getName(), p-1, pl);
+										System.out.println(bc.wildPokemon.getName() + " was added to your party");
 									}
 									if(answer == 2) {
 										System.out.println(bc.wildPokemon.getName() + " was transferred to the BOX in the PC");
@@ -641,11 +674,9 @@ public class WildBattleController extends Controller {
 								else {
 									bc.t.setPokemon(bc.wildPokemon.getName(), bc.t.getNumberOfPokemon(), pl);
 									bc.t.setNumberOfPokemon(bc.t.getNumberOfPokemon() + 1);
-									System.out.println(bc.wildPokemon.getName() + "was added to your party");
+									System.out.println(bc.wildPokemon.getName() + " was added to your party");
 								}
 							}
-							for(int i = 0; i < bc.t.getNumberOfPokemon(); i++)
-								bc.t.getPokemon(i).setCurrentHP(bc.t.getPokemon(i).getMaxHP());
 							bc.caught = false;
 						}
 						
@@ -659,6 +690,11 @@ public class WildBattleController extends Controller {
 							finished = true;
 						}
 					}
+					for(int i = 0; i < bc.t.getNumberOfPokemon(); i++) {
+						bc.t.getPokemon(i).setCurrentHP(bc.t.getPokemon(i).getMaxHP());
+						bc.t.getPokemon(i).revive();
+					}
+					bc.t.setCurrent(0);
 					finished = false;
 				}
 				bc.map.printActualMap();

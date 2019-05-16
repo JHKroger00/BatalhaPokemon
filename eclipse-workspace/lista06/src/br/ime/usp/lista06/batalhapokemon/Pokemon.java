@@ -106,20 +106,13 @@ public class Pokemon {
 	
 	public boolean fainted() {
 		if(this.currentHP <= 0) {
-			System.out.println(this.name + " fainted!");
 			fainted = true;
 		}
 		return fainted;
 	}
 	
-	private boolean comparesDouble (double x, double y) {
-		
-		double epsilon = 0.01;
-		
-		if (x-y < epsilon && y-x < epsilon) 
-			return true;
-		
-		return false;
+	public void revive() {
+		fainted = false;
 	}
 	
 	public int attackPokemon(Attack attack, Pokemon defender, TypeChart tc) {
@@ -127,18 +120,6 @@ public class Pokemon {
 				          tc.typeChart[attack.getTypeNum()][defender.getType2Num()];
 		double stab = 1;
 		double damage;
-		
-		if(comparesDouble(modifier, 0.00)) {
-			System.out.println(attack.getName() + "does not affect" + defender.getName() + ".");
-		}
-		
-		if(comparesDouble(modifier, 0.25) || comparesDouble(modifier, 0.50)) {
-			System.out.println("It's not very effective...");
-		}
-		
-		if(comparesDouble(modifier, 2.00) || comparesDouble(modifier, 4.00)) {
-			System.out.println("It's super effective!");
-		}
 		
 		if((attack.getTypeNum() == type1Num) || (attack.getTypeNum() == type2Num)) {
 			stab = 1.5;
@@ -179,10 +160,6 @@ public class Pokemon {
 			return pokemon;
 		}
 		return null;
-	}
-
-	public void revive() {
-		fainted = false;
 	}	
 }
 
@@ -228,47 +205,48 @@ class Attack {
 		return priority;
 	}
 	
-	public void hurtsUser(Attack attack, Pokemon p, int damage) {
+	public boolean hurtsUser(Attack attack, Pokemon p, int damage) {
 		String name = attack.getName();
 		
 		if(name.equals("TakeDown")) {
 			p.takeDamage(damage/4);
-			System.out.println(p.getName() + " lost some of its HP due to recoil");
-			return;
+			return true;
 		}
 		
 		if(name.equals("DoubleEdge")) {
 			p.takeDamage(damage/3);
-			System.out.println(p.getName() + " lost some of its HP due to recoil");
-			return;
+			return true;
 		}
 		
 		if(name.contentEquals("FlareBlitz")) {
 			p.takeDamage(damage/3);
-			System.out.println(p.getName() + " lost some of its HP due to recoil");
-			return;
+			return true;
 		}
+		return false;
 	}
 	
-	public void healsUser(Attack attack, Pokemon p, int damage) {
+	public boolean healsUser(Attack attack, Pokemon p, int damage) {
 		String name = attack.getName();
 		
 		if(name.equals("Absorb")) {
 			p.setCurrentHP(p.getCurrentHP()+(damage/2));
-			System.out.println(p.getName() + " restored some of its HP");
-			return;
+			return true;
 		}
 		
 		if(name.equals("MegaDrain")) {
 			p.setCurrentHP(p.getCurrentHP()+(damage/2));
-			System.out.println(p.getName() + " restored some of its HP");
-			return;
+			return true;
 		}
 		
 		if(name.equals("GigaDrain")) {
 			p.setCurrentHP(p.getCurrentHP()+(damage/2));
-			System.out.println(p.getName() + " restored some of its HP");
-			return;
+			return true;
 		}
+		
+		if(name.equals("LeechLife")) {
+			p.setCurrentHP(p.getCurrentHP()+(damage/2));
+			return true;
+		}
+		return false;
 	}
 }

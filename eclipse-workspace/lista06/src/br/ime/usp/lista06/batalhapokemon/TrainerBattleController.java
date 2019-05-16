@@ -108,27 +108,35 @@ public class TrainerBattleController extends Controller {
 		if(a1.getPriority() > a2.getPriority()) {
 			e1.action();
 			e1.description();
-			e2.action();
-			e2.description();	
+			if(!t2.getCurrentPokemon().fainted()) {
+				e2.action();
+				e2.description();	
+			}
 		}
 		else if (a2.getPriority() > a1.getPriority()) {
 			e2.action();
 			e2.description();
-			e1.action();
-			e1.description();
+			if(!t1.getCurrentPokemon().fainted()) {
+				e1.action();
+				e1.description();
+			}
 		}
 		else {
 			if(t1.getCurrentPokemon().getSpe() > t2.getCurrentPokemon().getSpe()) {
 				e1.action();
 				e1.description();
-				e2.action();
-				e2.description();
+				if(!t2.getCurrentPokemon().fainted()) {
+					e2.action();
+					e2.description();	
+				}
 			}
 			else {
 				e2.action();
 				e2.description();
-				e1.action();
-				e1.description();
+				if(!t1.getCurrentPokemon().fainted()) {
+					e1.action();
+					e1.description();
+				}
 			}
 		}		
 	}
@@ -138,6 +146,7 @@ public class TrainerBattleController extends Controller {
 		private final int priority = 1;
 		private Attack attack;
 		private int a, damage;
+		private double modifier;
 		private boolean usable = false;
 		private Trainer attacker, defender;
 		
@@ -147,6 +156,14 @@ public class TrainerBattleController extends Controller {
 		
 		public int getPriority() {
 			return priority;
+		}
+		
+		private boolean comparesDouble (double x, double y) {
+			double epsilon = 0.1;
+			
+			if (x-y < epsilon && y-x < epsilon) 
+				return true;
+			return false;
 		}
 		
 		@Override
@@ -181,16 +198,34 @@ public class TrainerBattleController extends Controller {
 			Pokemon currentDefender = defender.getCurrentPokemon();
 			attack = currentAttacker.attack[a-1];
 			
+			modifier = tc.typeChart[attack.getTypeNum()][currentDefender.getType1Num()]*
+			          tc.typeChart[attack.getTypeNum()][currentDefender.getType2Num()];
+			
 			damage = currentAttacker.attackPokemon(attack, currentDefender, tc); 
 			currentDefender.takeDamage(damage);
-			attack.hurtsUser(attack, currentAttacker, damage);
-			attack.healsUser(attack, currentAttacker, damage);
+			if(attack.hurtsUser(attack, currentAttacker, damage)) {
+				System.out.println(currentAttacker.getName() + " lost some of its HP due to recoil");
+			}
+			if(attack.healsUser(attack, currentAttacker, damage)) {
+				System.out.println(currentAttacker.getName() + " restored some of its HP");
+			}
 		}
 		
 		public void description() {
 			System.out.println(attacker.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
+			
+			if(comparesDouble(modifier, 0.0)) {
+				System.out.println(attack.getName() + "does not affect" + defender.getCurrentPokemon().getName() + "...");
+			}
+			
+			if(comparesDouble(modifier, 0.25) || comparesDouble(modifier, 0.5)) {
+				System.out.println("It's not very effective...");
+			}
+			
+			if(comparesDouble(modifier, 2.0) || comparesDouble(modifier, 4.0)) {
+				System.out.println("It's super effective!");
+			}
 		}
-		
 	}
 	
 	private class Switch extends Event {
@@ -504,6 +539,8 @@ public class TrainerBattleController extends Controller {
 				bc.run();
 			
 			if(bc.t1.activePokemonFainted()) {
+				System.out.println(bc.t1.getCurrentPokemon().getName() + " fainted!");
+
 				if(bc.t1.getActivePokemon() > 0) {
 					System.out.println("Trainer " + bc.t1.getName() + ", you need to choose another Pokemon!");
 					bc.setOptions('s');
@@ -517,6 +554,8 @@ public class TrainerBattleController extends Controller {
 			}
 			
 			if(bc.t2.activePokemonFainted()) {
+				System.out.println(bc.t2.getCurrentPokemon().getName() + " fainted!");
+				
 				if(bc.t2.getActivePokemon() > 0) {
 					System.out.println("Trainer " + bc.t2.getName() + " you need to choose another Pokemon!");
 					bc.setOptions('0');
