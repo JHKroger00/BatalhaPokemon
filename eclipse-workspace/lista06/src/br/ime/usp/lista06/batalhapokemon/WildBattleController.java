@@ -190,63 +190,74 @@ public class WildBattleController extends Controller {
 		public void action() {
 			Pokemon currentAttacker = t.getCurrentPokemon();
 			attack = currentAttacker.attack[a-1];
-			
-			modifier = tc.typeChart[attack.getTypeNum()][wildPokemon.getType1Num()]*
-			          tc.typeChart[attack.getTypeNum()][wildPokemon.getType2Num()];
-			
 			damage = currentAttacker.attackPokemon(attack, wildPokemon, tc); 
 			wildPokemon.takeDamage(damage);
-			System.out.println(t.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
-			
-			if(attack.hurtsUser(attack, currentAttacker, damage)) {
-				System.out.println(currentAttacker.getName() + " lost some of its HP due to recoil");
-			}
-			if(attack.healsUser(attack, currentAttacker, damage)){
-				System.out.println(currentAttacker.getName() + " restored some of its HP");
-			}
 		}
 		
 		public void description() {
+			modifier = tc.typeChart[attack.getTypeNum()][wildPokemon.getType1Num()]*
+			           tc.typeChart[attack.getTypeNum()][wildPokemon.getType2Num()];
+			
+			System.out.println(t.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
+			
 			if(comparesDouble(modifier, 0.0)) {
 				System.out.println("It does not affect " + wildPokemon.getName() + "...");
+				return;
 			}
 			
 			if(comparesDouble(modifier, 0.25) || comparesDouble(modifier, 0.5)) {
 				System.out.println("It's not very effective...");
+				return;
 			}
 			
 			if(comparesDouble(modifier, 2.0) || comparesDouble(modifier, 4.0)) {
 				System.out.println("It's super effective!");
+				return;
+			}
+			
+			if(!comparesDouble(modifier, 0.0)) {
+				if(attack.hurtsUser(attack, t.getCurrentPokemon(), damage)) {
+					System.out.println(t.getCurrentPokemon().getName() + " lost some of its HP due to recoil");
+				}
+				else if(attack.healsUser(attack,  t.getCurrentPokemon(), damage)){
+					System.out.println(t.getCurrentPokemon().getName() + " restored some of its HP");
+				}
 			}
 		}
 		
 		public void action(Pokemon p) {			
-			modifier = tc.typeChart[attack.getTypeNum()][t.getCurrentPokemon().getType1Num()]*
-			          tc.typeChart[attack.getTypeNum()][t.getCurrentPokemon().getType2Num()];
-			
 			damage = p.attackPokemon(attack, t.getCurrentPokemon(), tc); 
 			t.getCurrentPokemon().takeDamage(damage);
-			System.out.println(p.getName() + " used " + attack.getName() + "!");
-			
-			if(attack.hurtsUser(attack, p, damage)) {
-				System.out.println(p.getName() + " lost some of its HP due to recoil");
-			}
-			if(attack.healsUser(attack, p, damage)) {
-				System.out.println(p.getName() + " restored some of its HP");
-			}
 		}
 		
 		public void description(Pokemon p) {
+			modifier = tc.typeChart[attack.getTypeNum()][t.getCurrentPokemon().getType1Num()]*
+			           tc.typeChart[attack.getTypeNum()][t.getCurrentPokemon().getType2Num()];
+			
+			System.out.println(p.getName() + " used " + attack.getName() + "!");
+			
 			if(comparesDouble(modifier, 0.0)) {
 				System.out.println("It does not affect " + t.getCurrentPokemon().getName() + "...");
+				return;
 			}
 			
 			if(comparesDouble(modifier, 0.25) || comparesDouble(modifier, 0.5)) {
 				System.out.println("It's not very effective...");
+				return;
 			}
 			
 			if(comparesDouble(modifier, 2.0) || comparesDouble(modifier, 4.0)) {
 				System.out.println("It's super effective!");
+				return;
+			}
+			
+			if(!comparesDouble(modifier, 0.0)) {
+				if(attack.hurtsUser(attack, p, damage)) {
+						System.out.println(p.getName() + " lost some of its HP due to recoil");
+				}
+				if(attack.healsUser(attack, p, damage)) {
+					System.out.println(p.getName() + " restored some of its HP");
+				}
 			}
 		}
 	}
