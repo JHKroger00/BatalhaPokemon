@@ -1,7 +1,7 @@
 /*********************************************************/
-/** 						                            **/
+/** 						        **/
 /** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
-/**			 Bruno Macedo Sanches        NUSP: 10770263 **/
+/**	     Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
 /** Lista 06 - Exercicio 02                             **/
@@ -196,6 +196,8 @@ public class WildBattleController extends Controller {
 			
 			damage = currentAttacker.attackPokemon(attack, wildPokemon, tc); 
 			wildPokemon.takeDamage(damage);
+			System.out.println(t.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
+			
 			if(attack.hurtsUser(attack, currentAttacker, damage)) {
 				System.out.println(currentAttacker.getName() + " lost some of its HP due to recoil");
 			}
@@ -205,10 +207,8 @@ public class WildBattleController extends Controller {
 		}
 		
 		public void description() {
-			System.out.println(t.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
-			
 			if(comparesDouble(modifier, 0.0)) {
-				System.out.println(attack.getName() + "does not affect" + wildPokemon.getName() + "...");
+				System.out.println("It does not affect " + wildPokemon.getName() + "...");
 			}
 			
 			if(comparesDouble(modifier, 0.25) || comparesDouble(modifier, 0.5)) {
@@ -221,14 +221,33 @@ public class WildBattleController extends Controller {
 		}
 		
 		public void action(Pokemon p) {			
+			modifier = tc.typeChart[attack.getTypeNum()][t.getCurrentPokemon().getType1Num()]*
+			          tc.typeChart[attack.getTypeNum()][t.getCurrentPokemon().getType2Num()];
+			
 			damage = p.attackPokemon(attack, t.getCurrentPokemon(), tc); 
 			t.getCurrentPokemon().takeDamage(damage);
-			attack.hurtsUser(attack, p, damage);
-			attack.healsUser(attack, p, damage);
+			System.out.println(p.getName() + " used " + attack.getName() + "!");
+			
+			if(attack.hurtsUser(attack, p, damage)) {
+				System.out.println(p.getName() + " lost some of its HP due to recoil");
+			}
+			if(attack.healsUser(attack, p, damage)) {
+				System.out.println(p.getName() + " restored some of its HP");
+			}
 		}
 		
 		public void description(Pokemon p) {
-			System.out.println(p.getName() + " used " + attack.getName() + "!");
+			if(comparesDouble(modifier, 0.0)) {
+				System.out.println("It does not affect " + t.getCurrentPokemon().getName() + "...");
+			}
+			
+			if(comparesDouble(modifier, 0.25) || comparesDouble(modifier, 0.5)) {
+				System.out.println("It's not very effective...");
+			}
+			
+			if(comparesDouble(modifier, 2.0) || comparesDouble(modifier, 4.0)) {
+				System.out.println("It's super effective!");
+			}
 		}
 	}
 	
@@ -426,7 +445,7 @@ public class WildBattleController extends Controller {
 			if (caught)
 				System.out.println("Gotcha! " + p.getName() + " was caught!");
 			else
-				System.out.println("Oh, no! The Pok�mon broke free!");
+				System.out.println("Oh, no! The Pokemon broke free!");
 		}	
 	}
 	
