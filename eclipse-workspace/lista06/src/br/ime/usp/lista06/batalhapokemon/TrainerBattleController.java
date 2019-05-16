@@ -1,7 +1,7 @@
 /*********************************************************/
-/** 						        **/
+/** 						                            **/
 /** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
-/**	     Bruno Macedo Sanches        NUSP: 10770263 **/
+/**			 Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
 /** Lista 06 - Exercicio 01                             **/
@@ -204,7 +204,7 @@ public class TrainerBattleController extends Controller {
 		
 		public void description() {
 			modifier = tc.typeChart[attack.getTypeNum()][defender.getCurrentPokemon().getType1Num()]*
-			           tc.typeChart[attack.getTypeNum()][defender.getCurrentPokemon().getType2Num()];
+			          tc.typeChart[attack.getTypeNum()][defender.getCurrentPokemon().getType2Num()];
 			
 			System.out.println(attacker.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
 			

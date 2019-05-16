@@ -1,8 +1,7 @@
-    
 /*********************************************************/
-/** 						        **/
+/** 						                            **/
 /** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
-/**	     Bruno Macedo Sanches        NUSP: 10770263 **/
+/**			 Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
 /** Lista 06 - Exercicio 01                             **/
@@ -30,7 +29,7 @@ public abstract class Event {
 	}
 	
 	public void setBattle(Trainer t, Pokemon p) {
-		// This method is used to set a battle against a wild pokÃ©mon
+		// This method is used to set a battle against a wild pokémon
 	}
 	
 	public void setPokemon(Pokemon p) {

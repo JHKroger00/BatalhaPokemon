@@ -27,10 +27,10 @@
 26 Raichu Electric None 13 0 167 156 117 156 145 178 QuickAttack ThunderPunch Thunderbolt IronTail Normal Electric Electric Steel 1 13 13 9 p p s p 40 75 90 100 0 0 0 0 75
 27 Sandshrew Ground None 5 0 157 139 150 79 90 101 Scratch Swift RockSlide Bulldoze Normal Normal Rock Ground 1 1 6 5 p s p p 40 60 75 60 0 0 0 0 255
 28 Sandslash Ground None 5 0 182 167 178 106 117 128 Slash ShadowClaw RockSlide Earthquake Normal Ghost Rock Ground 1 8 6 5 p p p p 70 80 75 100 0 0 0 0 90
-29 Nidoran♀ Poison None 4 0 162 108 114 101 101 102 Scratch PoisonSting Bite PoisonFang Normal Poison Dark Poison 1 4 17 4 p p p p 40 15 60 50 0 0 0 0 235
+29 Nidoran? Poison None 4 0 162 108 114 101 101 102 Scratch PoisonSting Bite PoisonFang Normal Poison Dark Poison 1 4 17 4 p p p p 40 15 60 50 0 0 0 0 235
 30 Nidorina Poison None 4 0 177 125 130 117 117 118 Scratch Venoshock Crunch PoisonFang Normal Poison Dark Poison 1 4 17 4 p s p p 40 65 80 50 0 0 0 0 120
 31 Nidoqueen Poison Ground 4 5 197 158 152 139 150 140 BodySlam Venoshock EarthPower SludgeWave Normal Poison Ground Poison 1 4 5 4 p s s s 85 65 90 95 0 0 0 0 45
-32 Nidoran♂ Poison None 4 0 153 119 101 101 101 112 Peck PoisonSting DoubleKick HornAttack Flying Poison Fighting Normal 3 4 2 1 p p p p 40 15 45 65 0 0 0 0 235
+32 Nidoran? Poison None 4 0 153 119 101 101 101 112 Peck PoisonSting DoubleKick HornAttack Flying Poison Fighting Normal 3 4 2 1 p p p p 40 15 45 65 0 0 0 0 235
 33 Nidorino Poison None 4 0 168 136 119 117 117 128 Peck Venoshock HornAttack PoisonJab Flying Poison Normal Poison 3 4 1 4 p s p p 35 65 65 80 0 0 0 0 120
 34 Nidoking Poison Ground 4 5 188 169 141 150 139 150 BrickBreak PoisonJab Earthquake Megahorn Fighting Poison Ground Bug 2 4 5 7 p p p p 75 80 100 120 0 0 0 0 45
 35 Clefairy Normal None 1 0 177 106 110 123 128 95 Pound Wake-Up-Slap Psyshock Psychic Normal Fighting Psychic Psychic 1 2 14 14 p p s p 40 70 80 90 0 0 0 0 150
@@ -39,8 +39,8 @@
 38 Ninetales Fire None 10 0 180 140 139 146 167 167 QuickAttack Flamethrower EnergyBall FlareBlitz Normal Fire Grass Fire 1 10 12 10 p s s p 40 90 90 120 1 0 0 0 75
 39 Jigglypuff Normal None 1 0 222 106 79 106 84 79 Pound Round Wake-Up-Slap HyperVoice Normal Normal Fighting Normal 1 1 2 1 p s p s 40 60 70 90 0 0 0 0 170  
 40 Wigglytuff Normal None 1 0 247 134 106 150 112 106 BodySlam HyperVoice Wake-Up-Slap Psychic Normal Normal Fighting Psychic 1 1 2 14 p s p s 85 90 70 90 0 0 0 0 50  
-41 Zubat Poison Flying 4 3 147 106 95 90 101 117 Astonish LeechLife Bite AirCutter Ghost Bug Dark Flying 8 7 17 3 p s p s 30 20 60 60 0 0 0 0 255
-42 Golbat Poison Flying 4 3 182 145 134 128 139 156 LeechLife Crunch PoisonFang AirSlash Bug Dark Poison Flying 7 17 4 3 s p p s 20 80 50 75 0 0 0 0 90
+41 Zubat Poison Flying 4 3 147 106 95 90 101 117 Astonish LeechLife Bite AirCutter Ghost Bug Dark Flying 8 7 17 3 p p p s 30 20 60 60 0 0 0 0 255
+42 Golbat Poison Flying 4 3 182 145 134 128 139 156 LeechLife Crunch PoisonFang AirSlash Bug Dark Poison Flying 7 17 4 3 p p p s 20 80 50 75 0 0 0 0 90
 43 Oddish Grass Poison 12 4 152 112 117 139 128 90 Absorb Acid Round RazorLeaf Grass Poison Normal Grass 12 4 1 12 s s s p 40 40 60 55 0 0 0 0 255
 44 Gloom Grass Poison 12 4 167 128 134 159 139 101 MegaDrain Venoshock Round RazorLeaf Grass Poison Normal Poison 12 4 1 4 s s s s 60 65 60 55 0 0 0 0 120
 45 Vileplume Grass Poison 12 4 182 145 150 178 156 112 GigaDrain SludgeBomb Round PetalBlizzard Grass Poison Normal Grass 12 4 1 12 s s s p 75 90 60 90 0 0 0 0 45
@@ -77,3 +77,4 @@
 76 Golem Rock Ground 6 5 187 189 200 117 128 106 FirePunch RockTomb RockSlide EarthPower Fire Rock Rock Ground 11 6 6 5 p p p s 75 60 75 90 0 0 0 0 45
 77 Ponyta Fire None 11 0 157 150 117 128 128 156 Tackle Stomp Ember FlameWheel Normal Normal Fire Fire 1 1 11 11 p p s p 40 65 40 60 0 0 0 0 190
 78 Rapidash Fire None 11 0 172 167 134 145 145 172 QuickAttack Stomp FlameWheel FireBlast Normal Normal Fire Fire 1 1 11 11 p p p s 40 65 60 110 0 0 0 0 60
+ 

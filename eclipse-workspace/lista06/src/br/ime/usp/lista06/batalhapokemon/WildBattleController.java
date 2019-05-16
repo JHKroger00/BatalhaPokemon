@@ -1,7 +1,7 @@
 /*********************************************************/
-/** 						        **/
+/** 						                            **/
 /** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
-/**	     Bruno Macedo Sanches        NUSP: 10770263 **/
+/**			 Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
 /** Lista 06 - Exercicio 02                             **/
@@ -196,7 +196,7 @@ public class WildBattleController extends Controller {
 		
 		public void description() {
 			modifier = tc.typeChart[attack.getTypeNum()][wildPokemon.getType1Num()]*
-			           tc.typeChart[attack.getTypeNum()][wildPokemon.getType2Num()];
+			          tc.typeChart[attack.getTypeNum()][wildPokemon.getType2Num()];
 			
 			System.out.println(t.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
 			
@@ -232,7 +232,7 @@ public class WildBattleController extends Controller {
 		
 		public void description(Pokemon p) {
 			modifier = tc.typeChart[attack.getTypeNum()][t.getCurrentPokemon().getType1Num()]*
-			           tc.typeChart[attack.getTypeNum()][t.getCurrentPokemon().getType2Num()];
+			          tc.typeChart[attack.getTypeNum()][t.getCurrentPokemon().getType2Num()];
 			
 			System.out.println(p.getName() + " used " + attack.getName() + "!");
 			
