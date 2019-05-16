@@ -1,4 +1,4 @@
-40
+78
 1 Bulbasaur Grass Poison 12 4 152 111 111 128 128 106 Tackle Absorb VineWhip RazorLeaf Normal Grass Grass Grass 1 12 12 12 p s p p 40 40 45 55 0 0 0 0 45
 2 Ivysaur Grass Poison 12 4 167 125 126 145 145 123 Headbutt SludgeBomb MegaDrain RazorLeaf Normal Poison Grass Grass 1 4 12 12 p s s s 70 90 60 55 0 0 0 0 45 
 3 Venusaur Grass Poison 12 4 187 147 148 167 167 145 TakeDown SludgeBomb GigaDrain SolarBeam Normal Poison Grass Grass 1 4 12 12 p s s s 90 90 75 120 0 0 0 0 45
@@ -41,3 +41,39 @@
 40 Wigglytuff Normal None 1 0 247 134 106 150 112 106 BodySlam HyperVoice Wake-Up-Slap Psychic Normal Normal Fighting Psychic 1 1 2 14 p s p s 85 90 70 90 0 0 0 0 50  
 41 Zubat Poison Flying 4 3 147 106 95 90 101 117 Astonish LeechLife Bite AirCutter Ghost Bug Dark Flying 8 7 17 3 p s p s 30 20 60 60 0 0 0 0 255
 42 Golbat Poison Flying 4 3 182 145 134 128 139 156 LeechLife Crunch PoisonFang AirSlash Bug Dark Poison Flying 7 17 4 3 s p p s 20 80 50 75 0 0 0 0 90
+43 Oddish Grass Poison 12 4 152 112 117 139 128 90 Absorb Acid Round RazorLeaf Grass Poison Normal Grass 12 4 1 12 s s s p 40 40 60 55 0 0 0 0 255
+44 Gloom Grass Poison 12 4 167 128 134 159 139 101 MegaDrain Venoshock Round RazorLeaf Grass Poison Normal Poison 12 4 1 4 s s s s 60 65 60 55 0 0 0 0 120
+45 Vileplume Grass Poison 12 4 182 145 150 178 156 112 GigaDrain SludgeBomb Round PetalBlizzard Grass Poison Normal Grass 12 4 1 12 s s s p 75 90 60 90 0 0 0 0 45
+46 Paras Bug Grass 7 12 142 134 117 106 117 84 Scratch Absorb LeechLife X-Scissor Normal Grass Bug Bug 1 12 7 7 p s p p 40 40 20 80 0 0 0 0 190
+47 Parasect Bug Grass 7 12 167 161 145 123 145 90 Scratch GigaDrain CrossPoison X-Scissor Normal Grass Poison Bug 1 12 4 7 p s p p 40 75 70 80 0 0 0 0 75
+48 Venonat Bug Poison 7 4 167 117 112 101 117 106 Tackle Confusion PoisonFang SignalBeam Normal Psychic Poison Bug 1 14 4 7 p s p s 40 50 50 75 0 0 0 0 190
+49 Venomoth Bug Poison 7 4 177 128 123 156 139 156 Gust Psybeam PoisonFang BugBuzz Flying Psychic Poison Bug 3 14 4 7 s s p s 40 65 50 90 0 0 0 0 75
+50 Diglett Ground None 5 0 117 117 84 95 106 161 Scratch Astonish Bulldoze MudBomb Normal Ghost Ground Ground 1 8 5 5 p p p s 40 30 60 65 0 0 0 0 255
+51 Dugtrio Ground None 5 0 142 167 112 112 134 189 NightSlash MudBomb RockSlide Earthquake Dark Ground Rock Ground 17 5 6 5 p s p p 70 65 75 100 0 0 0 0 50
+52 Meowth Normal None 1 0 147 108 95 101 101 156 Scratch Bite FeintAttack PayDay Normal Dark Normal Dark 1 17 1 17 p p p p 40 60 60 40 0 0 0 0 255
+53 Persian Normal None 1 0 172 134 123 128 128 183 Swift Slash NightSlash ShadowBall Normal Normal Dark Ghost 1 1 17 8 s p p s 60 70 70 80 0 0 0 0 90
+54 Psyduck Water None 11 0 157 114 110 128 112 117 Scratch WaterGun Confusion WaterPulse Normal Water Psychic Water 1 11 14 11 p s s s 40 40 60 60 0 0 0 0 190
+55 Golduck Water None 11 0 187 147 143 161 145 150 AquaJet ZenHeadbutt Waterfall IceBeam Water Psychic Water Ice 11 14 11 15 p p p s 40 80 80 90 1 0 0 0 75
+56 Mankey Fighting None 2 0 147 145 95 95 106 134 Scratch KarateChop Assurance Acrobatics Normal Fighting Dark Flying 1 2 17 3 p p p p 40 50 60 55 0 0 0 0 190 	 
+57 Primeape Fighting None 2 0 172 172 123 123 134 161 LowSweep RockTomb Assurance CrossChop Fighting Rock Dark Fighting 2 6 17 2 p p p p 65 60 60 100 0 0 0 0 75
+58 Growlithe Fire None 10 0 162 134 106 134 112 123 Ember Bite TakeDown FireFang Fire Dark Normal Fire 10 17 1 10 s p p p 40 60 90 65 0 0 0 0 190
+59 Arcanine Fire None 10 0 197 178 145 167 145 161 Flamethrower ThunderFang ExtremeSpeed FlareBlitz Fire Electric Normal Fire 10 13 1 10 s p p p 90 65 80 120 0 0 2 0 75
+60 Poliwag Water None 11 0 147 112 101 101 101 156 DoubleSlap WaterGun MudShot BubbleBeam Normal Water Ground Water 1 11 5 11 p s s s 30 40 55 65 0 0 0 0 255 
+61 Poliwhirl Water None 11 0 172 128 128 112 112 156 BodySlam BubbleBeam MudBomb Wake-Up-Slap Normal Water Ground Fighting 1 11 5 2 p s s p 85 65 65 70 0 0 0 0 120 
+62 Poliwrath Water Fighting 11 2 197 161 161 134 156 134 BodySlam WaterFall MudBomb BrickBreak Normal Water Ground Fighting 1 11 5 2 p s s p 85 80 65 75 0 0 0 0 45
+63 Abra Psychic None 14 0 132 79 73 172 117 156 Confusion Psyshock Thief ShadowBall Psychic Psychic Dark Ghost 14 14 17 8 s s p s 50 80 60 80 0 0 0 0 200
+64 Kadabra Psychic None 14 0 147 95 90 189 134 172 Psybeam Psyshock KnockOff ShadowBall Psychic Psychic Dark Ghost 14 14 17 8 s s p s 65 80 65 80 0 0 0 0 100
+65 Alakazam Psychic None 14 0 162 112 106 205 161 189 Psyshock Psychic KnockOff ShadowBall Psychic Psychic Dark Ghost 14 14 17 8 s s p s 80 90 65 80 0 0 0 0 50
+66 Machop Fighting None 2 0 177 145 112 95 95 95 KarateChop SmackDown KnockOff LowSweep Fighting Rock Dark Fighting 2 6 17 2 p p p p 50 50 65 65 0 0 0 0 180
+67 Machocke Fighting None 2 0 187 167 134 112 123 106 BrickBreak DualChop KnockOff VitalThrow Fighting Dragon Dark Fighting 2 16 17 2 p p p p 75 40 65 70 0 0 0 -1 90
+68 Machamp Fighting None 2 0 197 200 145 128 150 117 BrickBreak DualChop Strength CrossChop Fighting Dragon Normal Fighting 2 16 1 2 p p p p 75 40 80 100 0 0 0 0 45
+69 Bellsprout Grass Poison 12 4 157 139 95 134 90 101 VineWhip Acid AcidSpray RazorLeaf Grass Poison Poison Grass 12 4 4 12 p s s p 45 40 40 55 0 0 0 0 255      
+70 Weepinbell Grass Poison 12 4 172 156 112 150 106 117 VineWhip Acid Venoshock GigaDrain Grass Poison Poison Grass 12 4 4 12 p s s s 45 40 65 75 0 0 0 0 120
+71 Victreebell Grass Poison 12 4 187 172 128 167 134 134 VineWhip Venoshock SludgeBomb LeafBlade Grass Poison Poison Grass 12 4 4 12 p s s p 45 65 90 90 0 0 0 0 45
+72 Tentacool Water Poison 11 4 147 101 95 112 167 134 PoisonSting WaterPulse AcidSpray Brine Poison Water Poison Water 4 11 4 11 p s s s 15 60 40 65 0 0 0 0 190
+73 Tentacruel Water Poison 11 4 187 134 128 145 189 167 PoisonJab WaterPulse SludgeWave Waterfall Poison Water Poison Water 4 11 4 11 p s s p 80 60 95 80 0 0 0 0 60
+74 Geodude Rock Ground 6 5 147 145 167 90 90 79 Tackle RockThrow SmackDown Bulldoze Normal Rock Rock Ground 1 6 6 5 p p p p 40 50 50 60 0 0 0 0 255
+75 Graveler Rock Ground 6 5 162 161 183 106 106 95 Tackle RockTomb RockSlide Bulldoze Normal Rock Rock Ground 1 6 6 5 p p p p 40 60 75 60 0 0 0 0 120
+76 Golem Rock Ground 6 5 187 189 200 117 128 106 FirePunch RockTomb RockSlide EarthPower Fire Rock Rock Ground 11 6 6 5 p p p s 75 60 75 90 0 0 0 0 45
+77 Ponyta Fire None 11 0 157 150 117 128 128 156 Tackle Stomp Ember FlameWheel Normal Normal Fire Fire 1 1 11 11 p p s p 40 65 40 60 0 0 0 0 190
+78 Rapidash Fire None 11 0 172 167 134 145 145 172 QuickAttack Stomp FlameWheel FireBlast Normal Normal Fire Fire 1 1 11 11 p p p s 40 65 60 110 0 0 0 0 60
