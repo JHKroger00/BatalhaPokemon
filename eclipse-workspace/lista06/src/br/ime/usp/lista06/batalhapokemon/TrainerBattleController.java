@@ -1,7 +1,7 @@
 /*********************************************************/
-/** 						                            **/
+/** 						        **/
 /** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
-/**			 Bruno Macedo Sanches        NUSP: 10770263 **/
+/**	     Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
 /** Lista 06 - Exercicio 01                             **/
@@ -198,24 +198,18 @@ public class TrainerBattleController extends Controller {
 			Pokemon currentDefender = defender.getCurrentPokemon();
 			attack = currentAttacker.attack[a-1];
 			
-			modifier = tc.typeChart[attack.getTypeNum()][currentDefender.getType1Num()]*
-			          tc.typeChart[attack.getTypeNum()][currentDefender.getType2Num()];
-			
 			damage = currentAttacker.attackPokemon(attack, currentDefender, tc); 
 			currentDefender.takeDamage(damage);
-			if(attack.hurtsUser(attack, currentAttacker, damage)) {
-				System.out.println(currentAttacker.getName() + " lost some of its HP due to recoil");
-			}
-			if(attack.healsUser(attack, currentAttacker, damage)) {
-				System.out.println(currentAttacker.getName() + " restored some of its HP");
-			}
 		}
 		
 		public void description() {
+			modifier = tc.typeChart[attack.getTypeNum()][defender.getCurrentPokemon().getType1Num()]*
+			           tc.typeChart[attack.getTypeNum()][defender.getCurrentPokemon().getType2Num()];
+			
 			System.out.println(attacker.getCurrentPokemon().getName() + " used " + attack.getName() + "!");
 			
 			if(comparesDouble(modifier, 0.0)) {
-				System.out.println(attack.getName() + "does not affect" + defender.getCurrentPokemon().getName() + "...");
+				System.out.println("It does not affect " + defender.getCurrentPokemon().getName() + "...");
 			}
 			
 			if(comparesDouble(modifier, 0.25) || comparesDouble(modifier, 0.5)) {
@@ -224,6 +218,15 @@ public class TrainerBattleController extends Controller {
 			
 			if(comparesDouble(modifier, 2.0) || comparesDouble(modifier, 4.0)) {
 				System.out.println("It's super effective!");
+			}
+			
+			if(!comparesDouble(modifier, 0.0)) {
+				if(attack.hurtsUser(attack, attacker.getCurrentPokemon(), damage)) {
+					System.out.println(attacker.getCurrentPokemon() + " lost some of its HP due to recoil");
+				}
+				if(attack.healsUser(attack, attacker.getCurrentPokemon(), damage)) {
+					System.out.println(attacker.getCurrentPokemon() + " restored some of its HP");
+				}
 			}
 		}
 	}
