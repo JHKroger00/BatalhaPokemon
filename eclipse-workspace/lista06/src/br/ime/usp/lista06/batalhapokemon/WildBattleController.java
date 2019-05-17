@@ -41,8 +41,10 @@ public class WildBattleController extends Controller {
 				e1.setPokemon(wildPokemon);
 			
 			e2.setBattle(t, wildPokemon);
-			Fight f = (Fight)e2;
-			f.setAttack(wildPokemon);
+			if(e2.getName() != 'n') {
+				Fight f = (Fight)e2;
+				f.setAttack(wildPokemon);
+			}
 			
 			if(e1.getName() == 'r' || e2.getName() == 'n') {
 				e1.action();
@@ -449,7 +451,7 @@ public class WildBattleController extends Controller {
 			m = ThreadLocalRandom.current().nextInt(0, 128);
 			
 			if(a >= m) 
-				caught = true;			
+				caught = true;
 		}
 		
 		public void description() {
@@ -567,6 +569,7 @@ public class WildBattleController extends Controller {
 		}
 		
 		while(dir != 'q') {
+			bc.t.setActivePokemon();
 			if(!bc.map.move(bc.t, dir)) {
 				System.out.println("This is not an available command! Select another one!");
 				dir = sc.next().charAt(0);
@@ -656,6 +659,7 @@ public class WildBattleController extends Controller {
 												   + "recover all the fainted Pokemon back to full health...");
 								for(int i = 0; i < bc.t.getNumberOfPokemon(); i++)
 									bc.t.getPokemon(i).setCurrentHP(bc.t.getPokemon(i).getMaxHP());
+								bc.t.setActivePokemon();
 							}
 						}
 						
@@ -706,7 +710,9 @@ public class WildBattleController extends Controller {
 									bc.t.setNumberOfPokemon(bc.t.getNumberOfPokemon() + 1);
 									System.out.println(bc.wildPokemon.getName() + " was added to your party");
 								}
+								bc.t.setActivePokemon();
 							}
+							
 							bc.caught = false;
 						}
 						

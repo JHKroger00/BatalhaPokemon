@@ -159,6 +159,16 @@ public class Trainer {
 		else
 			return false;
 	}
+	public void setActivePokemon() {
+		int qtd = 0;
+		for(int i = 0; i < numberOfPokemon; i++) {
+			if (!pokemon[i].fainted()) {
+				qtd++;
+				pokemon[i].revive();
+			}
+		}
+		activePokemon = qtd;
+	}
 	
 	public void walkInMap(char direction) {
 		switch (direction) {
