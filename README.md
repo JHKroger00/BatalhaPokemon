@@ -85,12 +85,88 @@ Deve-se escolher o nome dos treinadores e os seus pokemons, os pokemons disponí
 
 40 Wigglytuff 
 
+41 Zubat
+
+42 Golbat 
+
+43 Oddish 
+
+44 Gloom 
+
+45 Vileplume 
+
+46 Paras 
+
+47 Parasect 
+
+48 Venonat 
+
+49 Venomoth 
+
+50 Diglett 
+
+51 Dugtrio 
+
+52 Meowth 
+
+53 Persian 
+
+54 Psyduck 
+
+55 Golduck
+
+56 Mankey 
+
+57 Primeape 
+
+58 Growlithe 
+
+59 Arcanine 
+
+60 Poliwag 
+
+61 Poliwhirl 
+
+62 Poliwrath 
+
+63 Abra 
+
+64 Kadabra 
+
+65 Alakazam 
+
+66 Machop 
+
+67 Machocke 
+
+68 Machamp 
+
+69 Bellsprout     
+
+70 Weepinbell 
+
+71 Victreebell 
+
+72 Tentacool 
+
+73 Tentacruel 
+
+74 Geodude 
+
+75 Graveler 
+
+76 Golem 
+
+77 Ponyta 
+
+78 Rapidash 
+
 Cada pokémon tem um set de ataques diferentes, ataques mais fortes podem causar danos ao pokémon atacante. Cada treinador pode escolher sua ação durante as rodadas, os treinadores podem curar seus pokémons, trocá-los, atacar o inimigo ou fugir da batalha. A batalha acaba quando um dos treinadores fica sem pokémons ou foge da batalha.
 
 Um sistema de fraquezas foi desenvolvido, com o dano baseado no tipo do pokémon e seu ataque, além de outras características de cada pokémon.
 
 ## Mapa
-O treinador também tem a opção de caminhar pelo mapa do jogo, ao caminhar pelo mapa, ele pode encontrar pokémons selvagens na grama e terá de lutar. 
+O treinador também tem a opção de caminhar pelo mapa do jogo, ao caminhar pelo mapa, ele pode encontrar pokémons selvagens na grama e terá de lutar. Para rodar o mapa, o usuário deve rodar a classe WildBattleController
 
 Durante a batalha o treinador pode capturar o pokémon selvagem e mantê-lo para si, além de também poder usar o pokémon recém-capturado em outras batalhas.
 
