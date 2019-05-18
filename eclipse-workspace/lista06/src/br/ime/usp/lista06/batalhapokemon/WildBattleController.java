@@ -449,7 +449,7 @@ public class WildBattleController extends Controller {
 				ball = 2.0;
 			
 			a = (int)Math.floor(((double)((3*p.getMaxHP())-(2*p.getCurrentHP()))*p.getCatchRate()*ball)/((double)3*p.getMaxHP()));
-			m = ThreadLocalRandom.current().nextInt(0, 128);
+			m = ThreadLocalRandom.current().nextInt(0, 256);
 			
 			if(a >= m) 
 				caught = true;
