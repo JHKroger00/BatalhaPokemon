@@ -99,7 +99,7 @@ public class Trainer {
 			for(i = 1; i < 6; i++) 
 				auxPokemons[i] = null; //Creates a null Pokemon
 			
-			System.out.println(auxName + ", your new adventure is about enfold!");
+			System.out.println(auxName + ", your new adventure is about unfold!");
 			System.out.println("Embark now on your very own Pokemon adventure!");
 			
 			t = new Trainer(auxName, id, auxPokemons, 1, 1);
