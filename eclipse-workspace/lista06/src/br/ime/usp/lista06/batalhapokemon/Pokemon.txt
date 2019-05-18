@@ -1,4 +1,4 @@
-78
+103
 1 Bulbasaur Grass Poison 12 4 152 111 111 128 128 106 Tackle Absorb VineWhip RazorLeaf Normal Grass Grass Grass 1 12 12 12 p s p p 40 40 45 55 0 0 0 0 45
 2 Ivysaur Grass Poison 12 4 167 125 126 145 145 123 Headbutt SludgeBomb MegaDrain RazorLeaf Normal Poison Grass Grass 1 4 12 12 p s s s 70 90 60 55 0 0 0 0 45 
 3 Venusaur Grass Poison 12 4 187 147 148 167 167 145 TakeDown SludgeBomb GigaDrain SolarBeam Normal Poison Grass Grass 1 4 12 12 p s s s 90 90 75 120 0 0 0 0 45
@@ -77,4 +77,28 @@
 76 Golem Rock Ground 6 5 187 189 200 117 128 106 FirePunch RockTomb RockSlide EarthPower Fire Rock Rock Ground 11 6 6 5 p p p s 75 60 75 90 0 0 0 0 45
 77 Ponyta Fire None 11 0 157 150 117 128 128 156 Tackle Stomp Ember FlameWheel Normal Normal Fire Fire 1 1 11 11 p p s p 40 65 40 60 0 0 0 0 190
 78 Rapidash Fire None 11 0 172 167 134 145 145 172 QuickAttack Stomp FlameWheel FireBlast Normal Normal Fire Fire 1 1 11 11 p p p s 40 65 60 110 0 0 0 0 60
- 
+79 Slowpoke Water Psychic 10 14 197 128 128 101 101 73 Tackle WaterGun Confusion WaterPulse Normal Water Psychic Water 1 10 14 10 p s s s 40 40 50 60 0 0 0 0 190
+80 Slowbro Water Psychic 10 14 202 139 178 167 145 90 Headbutt WaterPulse ZenHeadbutt Surf Normal Water Psychic Water 1 10 14 10 p s p s 70 60 80 90 0 0 0 0 75
+81 Magnemite Electric Steel 13 9 132 95 134 161 117 106 Tackle ThunderShock ChargeBeam MagnetBomb Normal Electric Electric Steel 1 13 13 9 p s s p 40 40 50 60 0 0 0 0 190
+82 Magneton Electric Steel 13 9 157 123 161 189 134 134 Tackle Discharge ThunderBolt FlashCannon Normal Electric Electric Steel 1 13 13 9 p s s s 40 80 90 80 0 0 0 0 75
+83 Farfetch'd Normal Flying 1 3 159 156 117 121 125 123 Peck FuryCutter AerialAce AirSlash Flying Bug Flying Flying 3 7 3 3 p p p s 35 40 60 75 0 0 0 0 45
+84 Doduo Normal Flying 1 3 142 150 106 95 95 139 QuickAttack Pluck Pursuit Uproar Normal Flying Dark Normal 1 3 17 3 p p p s 40 60 40 90 1 0 0 0 190
+85 Dodrio Normal Flying 1 3 167 178 134 123 123 178 QuickAttack DrillPeck Pursuit Uproar Normal Flying Dark Normal 1 3 17 3 p p p s 40 80 40 90 1 0 0 0 45
+86 Seel Water None 11 0 172 106 117 106 134 106 Headbutt AquaJet AuroraBeam Brine Normal Water Ice Water 1 11 15 11 p p s s 70 40 65 65 0 1 0 0 190
+87 Dewgong Water Ice 11 15 197 134 145 134 161 134 Headbutt AquaTail AuroraBeam IceBeam Normal Water Ice Ice 1 11 15 15 p p s s 70 90 65 90 0 0 0 0 75
+88 Grimer Poison None 4 0 187 145 112 101 112 84 Pound KnockOff Sludge MudBomb Normal Dark Poison Ground 1 17 4 5 p p s s 40 65 65 65 0 0 0 0 190 
+89 Muk Poison None 4 0 212 172 139 128 167 112 KnockOff Sludge SludgeWave MudBomb Dark Poison Poison Ground 17 4 4 5 p s s s 65 65 90 65 0 0 0 0 75
+90 Shellder Water None 11 0 137 128 167 106 84 101 Tackle WaterGun IceShard RazorShell Normal Water Ice Water 1 11 15 11 p s p p 40 40 40 75 0 0 0 0 190
+91 Cloyster Water Ice 11 15 157 161 255 150 106 134 WaterPulse AuroraBeam Surf IcicleCrash Water Ice Water Ice 11 15 11 15 s s s p 60 65 90 85 0 0 0 0 60
+92 Gastly Ghost Poison 8 4 137 95 90 167 95 145 Lick Venoshock Payback Hex Ghost Poison Dark Ghost 8 4 17 8 p s p s 30 65 50 65 0 0 0 0 190
+93 Hunter Ghost Poison 8 4 152 112 106 183 117 161 ShadowPunch Venoshock Payback ShadowBall Ghost Poison Dark Ghost 8 4 17 8 p s p s 60 65 50 80 0 0 0 0 90
+94 Gengar Ghost Poison 8 4 167 128 123 200 139 178 ShadowPunch SludgeBomb DarkPulse ShadowBall Ghost Poison Dark Ghost 8 4 17 8 p s s s 60 65 80 80 0 0 0 0 45
+95 Onix Rock Ground 6 5 142 106 233 90 106 134 Tackle RockTomb RockSlide Earthquake Normal Rock Rock Ground 1 6 6 5 p p p p 40 60 75 100 0 0 0 0 45
+96 Drowzee Psychic None 14 0 167 110 106 104 156 103 Pound Confusion PsyBeam ZenHeadbutt Normal Psychic Psychic Psychic 1 14 14 14 p s s p 40 50 65 80 0 0 0 0 190
+97 Hypno Psychic None 14 0 192 137 134 137 183 130 Pound Psybeam Psyshock Psychic Normal Psychic Psychic Psychic 1 14 14 14 p s s s 40 65 80 90 0 0 0 0 75
+98 Krabby Water None 11 0 137 172 156 84 84 112 ViceGrip Bubble BubbleBeam MudShot Normal Water Water Ground 1 11 11 5 p s s s 55 40 65 55 0 0 0 0 225
+99 Kingler Water None 11 0 162 200 183 112 112 139 ViceGrip Brine Slam Crabhammer Normal Water Normal Water 1 11 1 11 p s p p 55 65 80 100 0 0 0 0 60
+100 Voltorb Electric None 13 0 147 90 112 117 117 167 Tackle Swift ChargeBeam Spark Normal Normal Electric Electric 1 1 13 13 p s s p 40 60 60 65 0 0 0 0 190
+101 Electrode Electric None 13 0 167 112 134 145 145 222 Swift ChargeBeam Spark Thunderbolt Normal Electric Electric Electric 1 13 13 13 s s p s 60 50 65 90 0 0 0 0 60
+102 Exeggcute Grass Psychic 12 14 167 101 145 123 106 101 BulletSeed Confusion HiddenPower Extrasensory Grass Psychic Normal Psychic 12 14 1 14 p s s s 25 50 60 80 0 0 0 0 90
+103 Exeggutor Grass Psychic 12 14 202 161 150 194 139 117 Stomp SeedBomb Psyshock Extrasensory Normal Grass Psychic Psychic 1 12 14 14 p p s s 65 80 80 80 0 0 0 0 45
