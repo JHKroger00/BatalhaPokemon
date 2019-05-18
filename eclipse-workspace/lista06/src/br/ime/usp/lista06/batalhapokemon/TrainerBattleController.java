@@ -361,9 +361,9 @@ public class TrainerBattleController extends Controller {
 			if (item == 1) 
 				Bag.useItem("potion", t.getPokemon(p));
 			else if (item == 2) 
-					Bag.useItem("super potion", t.getPokemon(p));
+				Bag.useItem("super potion", t.getPokemon(p));
 			else if (item == 3) 
-					Bag.useItem("hyper potion", t.getPokemon(p));
+				Bag.useItem("hyper potion", t.getPokemon(p));
 		}
 		
 		public void description() {
