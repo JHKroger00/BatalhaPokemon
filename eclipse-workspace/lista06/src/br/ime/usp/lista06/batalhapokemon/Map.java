@@ -118,24 +118,4 @@ public class Map {
 		Pokemon wild = Pokemon.setPokemon(pl.names[rand] , pl);
 		return wild;
 	}
-	
-	public static void main(String[] args) throws Exception {
-		PokemonList pl = new PokemonList();
-		Map mapa = new Map();
-		Pokemon wild;
-		Trainer t = Trainer.createTrainer(0, pl, 0);
-		char dir;
-		mapa.printActualMap();
-		dir = TrainerBattleController.sc.next().charAt(0);
-		while(mapa.move(t, dir)) {
-			mapa.printActualMap();
-			if(mapa.hasPokemon(t)) {
-				wild = getWildPokemon(pl);
-				System.out.println("A wild " + wild.getName() + " appeared!");
-			}
-			dir = TrainerBattleController.sc.next().charAt(0);
-		}
-		System.out.println("You walked away from the map");
-		mapa.printOriginalMap();
-	}
 }
