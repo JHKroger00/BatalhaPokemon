@@ -154,8 +154,8 @@ public class Pokemon {
 				attacks[j] = new Attack(pl.attacks[i][j], pl.attackType[i][j], pl.attackTypeNum[i][j], pl.category[i][j], 
 										pl.power[i][j], pl.priority[i][j]);
 			}
-			pokemon = new Pokemon(pl.names[i], pl.dexNum[i], pl.types[i][0], pl.types[i][1], pl.attackTypeNum[i][0],
-				  pl.attackTypeNum[i][1], pl.stats[i][0], pl.stats[i][1], pl.stats[i][2], pl.stats[i][3], pl.stats[i][4], 
+			pokemon = new Pokemon(pl.names[i], pl.dexNum[i], pl.types[i][0], pl.types[i][1], pl.typeNum[i][0],
+				  pl.typeNum[i][1], pl.stats[i][0], pl.stats[i][1], pl.stats[i][2], pl.stats[i][3], pl.stats[i][4], 
 				  pl.stats[i][5], pl.catchRate[i], attacks[0], attacks[1], attacks[2], attacks[3]);
 			return pokemon;
 		}
