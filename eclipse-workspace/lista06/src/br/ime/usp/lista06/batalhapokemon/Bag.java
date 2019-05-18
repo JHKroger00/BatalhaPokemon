@@ -19,12 +19,7 @@ public class Bag {
 		int currentHP = p.getCurrentHP();
 		int maxHP = p.getMaxHP();
 		
-		if (currentHP == maxHP) {
-			System.out.println(p.getName() + "'s HP is full!");
-			return;
-		}
-		
-		else if (item.equals("potion")) {
+		if (item.equals("potion")) {
 			if (currentHP + potion < maxHP)
 				p.setCurrentHP(currentHP + potion);
 			else 
@@ -47,9 +42,7 @@ public class Bag {
 				p.setCurrentHP(maxHP);
 			return;
 		}
-	}
-	
-	
+	}	
 }
 
 
