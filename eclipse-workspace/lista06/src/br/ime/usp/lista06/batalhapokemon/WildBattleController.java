@@ -1,7 +1,7 @@
 /*********************************************************/
-/** 						                            **/
+/** 					                **/
 /** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
-/**			 Bruno Macedo Sanches        NUSP: 10770263 **/
+/**	     Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
 /** Lista 06 - Exercicio 02                             **/
@@ -40,8 +40,8 @@ public class WildBattleController extends Controller {
 			if(e1.getName() == 'c')
 				e1.setPokemon(wildPokemon);
 			
-			e2.setBattle(t, wildPokemon);
 			if(e2.getName() != 'n') {
+				e2.setBattle(t, wildPokemon);
 				Fight f = (Fight)e2;
 				f.setAttack(wildPokemon);
 			}
@@ -204,17 +204,14 @@ public class WildBattleController extends Controller {
 			
 			if(comparesDouble(modifier, 0.0)) {
 				System.out.println("It does not affect " + wildPokemon.getName() + "...");
-				return;
 			}
 			
 			if(comparesDouble(modifier, 0.25) || comparesDouble(modifier, 0.5)) {
 				System.out.println("It's not very effective...");
-				return;
 			}
 			
 			if(comparesDouble(modifier, 2.0) || comparesDouble(modifier, 4.0)) {
 				System.out.println("It's super effective!");
-				return;
 			}
 			
 			if(!comparesDouble(modifier, 0.0)) {
@@ -240,17 +237,14 @@ public class WildBattleController extends Controller {
 			
 			if(comparesDouble(modifier, 0.0)) {
 				System.out.println("It does not affect " + t.getCurrentPokemon().getName() + "...");
-				return;
 			}
 			
 			if(comparesDouble(modifier, 0.25) || comparesDouble(modifier, 0.5)) {
 				System.out.println("It's not very effective...");
-				return;
 			}
 			
 			if(comparesDouble(modifier, 2.0) || comparesDouble(modifier, 4.0)) {
 				System.out.println("It's super effective!");
-				return;
 			}
 			
 			if(!comparesDouble(modifier, 0.0)) {
@@ -367,9 +361,16 @@ public class WildBattleController extends Controller {
 			
 			while(!available) {
 				if (pokemon > 0 && pokemon <= t.getNumberOfPokemon()) {
-					if(!t.getPokemon(pokemon - 1).fainted()) {
-						p = pokemon -1;
-						available = true;
+					if(!t.getPokemon(pokemon-1).fainted()) {
+						if (t.getPokemon(pokemon-1).getCurrentHP() == t.getPokemon(pokemon-1).getMaxHP()){
+							System.out.println(t.getPokemon(pokemon-1).getName() + "'s HP is full!");
+							System.out.println("Choose another Pokemon");
+							pokemon = getInt(sc);
+						}
+						else {
+							p = pokemon-1;
+							available = true;
+						}
 					}
 					else {
 						System.out.println("Chosen Pokemon can't battle anymore!");
@@ -387,19 +388,19 @@ public class WildBattleController extends Controller {
 			if (item == 1) 
 				Bag.useItem("potion", t.getPokemon(p));
 			else if (item == 2) 
-					Bag.useItem("super potion", t.getPokemon(p));
+				Bag.useItem("super potion", t.getPokemon(p));
 			else if (item == 3) 
-					Bag.useItem("hyper potion", t.getPokemon(p));
+				Bag.useItem("hyper potion", t.getPokemon(p));
 		}
 		
 		public void description() {
 			switch(item) {
 			case 1 : 
-				System.out.println(t.getName() + " used a potion!");
+				System.out.println(t.getName() + " used a potion on " + t.getPokemon(p).getName() + "!");
 			case 2 :
-				System.out.println(t.getName() + " used a superpotion!");
+				System.out.println(t.getName() + " used a superpotion on " + t.getPokemon(p).getName() + "!");
 			case 3 :
-				System.out.println(t.getName() + " used a hyperpotion!");
+				System.out.println(t.getName() + " used a hyperpotion on " + t.getPokemon(p).getName() + "!");
 			}
 		}	
 	}
@@ -644,6 +645,7 @@ public class WildBattleController extends Controller {
 						
 						if(bc.t.activePokemonFainted()) {
 							System.out.println(bc.t.getCurrentPokemon().getName() + " fainted!");
+							bc.t.getCurrentPokemon().setCurrentHP(0);
 							
 							if(bc.t.getActivePokemon() > 0) {
 								System.out.println("Trainer " + bc.t.getName() + ", you need to choose another Pokemon!");
@@ -659,7 +661,6 @@ public class WildBattleController extends Controller {
 												   + "recover all the fainted Pokemon back to full health...");
 								for(int i = 0; i < bc.t.getNumberOfPokemon(); i++)
 									bc.t.getPokemon(i).setCurrentHP(bc.t.getPokemon(i).getMaxHP());
-								bc.t.setActivePokemon();
 							}
 						}
 						
@@ -710,9 +711,7 @@ public class WildBattleController extends Controller {
 									bc.t.setNumberOfPokemon(bc.t.getNumberOfPokemon() + 1);
 									System.out.println(bc.wildPokemon.getName() + " was added to your party");
 								}
-								bc.t.setActivePokemon();
 							}
-							
 							bc.caught = false;
 						}
 						
@@ -731,6 +730,7 @@ public class WildBattleController extends Controller {
 						bc.t.getPokemon(i).revive();
 					}
 					bc.t.setCurrent(0);
+					bc.t.setActivePokemon(bc.t.getNumberOfPokemon());
 					finished = false;
 				}
 				bc.map.printActualMap();
