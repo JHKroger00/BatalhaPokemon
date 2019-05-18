@@ -1,7 +1,7 @@
 /*********************************************************/
-/** 						                            **/
+/** 					                **/
 /** Autores: Joao Henrique de A. Kroger  NUSP: 10770109 **/
-/**			 Bruno Macedo Sanches        NUSP: 10770263 **/
+/**	     Bruno Macedo Sanches        NUSP: 10770263 **/
 /**                                                     **/
 /** Professor: Marcelo Finger                           **/
 /** Lista 06 - Exercicio 01                             **/
@@ -335,8 +335,15 @@ public class TrainerBattleController extends Controller {
 			while(!available) {
 				if (pokemon > 0 && pokemon <= t.getNumberOfPokemon()) {
 					if(!t.getPokemon(pokemon-1).fainted()) {
-						p = pokemon -1;
-						available = true;
+						if (t.getPokemon(pokemon-1).getCurrentHP() == t.getPokemon(pokemon-1).getMaxHP()){
+							System.out.println(t.getPokemon(pokemon-1).getName() + "'s HP is full!");
+							System.out.println("Choose another Pokemon");
+							pokemon = getInt(sc);
+						}
+						else {
+							p = pokemon -1;
+							available = true;
+						}
 					}
 					else {
 						System.out.println("Chosen Pokemon can't battle anymore!");
@@ -362,11 +369,11 @@ public class TrainerBattleController extends Controller {
 		public void description() {
 			switch(item) {
 			case 1 : 
-				System.out.println(t.getName() + " used a potion!");
+				System.out.println(t.getName() + " used a potion on " + t.getPokemon(p).getName() + "!");
 			case 2 :
-				System.out.println(t.getName() + " used a superpotion!");
+				System.out.println(t.getName() + " used a superpotion on " + t.getPokemon(p).getName() + "!");
 			case 3 :
-				System.out.println(t.getName() + " used a hyperpotion!");
+				System.out.println(t.getName() + " used a hyperpotion on " + t.getPokemon(p).getName() + "!");
 			}
 		}	
 	}
@@ -543,6 +550,7 @@ public class TrainerBattleController extends Controller {
 			
 			if(bc.t1.activePokemonFainted()) {
 				System.out.println(bc.t1.getCurrentPokemon().getName() + " fainted!");
+				bc.t1.getCurrentPokemon().setCurrentHP(0);
 
 				if(bc.t1.getActivePokemon() > 0) {
 					System.out.println("Trainer " + bc.t1.getName() + ", you need to choose another Pokemon!");
@@ -552,12 +560,14 @@ public class TrainerBattleController extends Controller {
 				}
 				else {
 					finished = true;
+					System.out.println(bc.t1.getName() + " is out of usable Pokemon!");
 					System.out.println("The fight is over, " + bc.t2.getName() + " won the battle!");
 				}
 			}
 			
 			if(bc.t2.activePokemonFainted()) {
 				System.out.println(bc.t2.getCurrentPokemon().getName() + " fainted!");
+				bc.t2.getCurrentPokemon().setCurrentHP(0);
 				
 				if(bc.t2.getActivePokemon() > 0) {
 					System.out.println("Trainer " + bc.t2.getName() + " you need to choose another Pokemon!");
@@ -567,6 +577,7 @@ public class TrainerBattleController extends Controller {
 				}
 				else {
 					finished = true;
+					System.out.println(bc.t2.getName() + " is out of usable Pokemon!");
 					System.out.println("The fight is over, " + bc.t1.getName() + " won the battle!");
 				}
 			}
