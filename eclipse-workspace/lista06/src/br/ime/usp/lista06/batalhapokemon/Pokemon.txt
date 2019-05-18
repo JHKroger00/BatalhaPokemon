@@ -65,7 +65,7 @@
 64 Kadabra Psychic None 14 0 147 95 90 189 134 172 Psybeam Psyshock KnockOff ShadowBall Psychic Psychic Dark Ghost 14 14 17 8 s s p s 65 80 65 80 0 0 0 0 100
 65 Alakazam Psychic None 14 0 162 112 106 205 161 189 Psyshock Psychic KnockOff ShadowBall Psychic Psychic Dark Ghost 14 14 17 8 s s p s 80 90 65 80 0 0 0 0 50
 66 Machop Fighting None 2 0 177 145 112 95 95 95 KarateChop SmackDown KnockOff LowSweep Fighting Rock Dark Fighting 2 6 17 2 p p p p 50 50 65 65 0 0 0 0 180
-67 Machocke Fighting None 2 0 187 167 134 112 123 106 BrickBreak DualChop KnockOff VitalThrow Fighting Dragon Dark Fighting 2 16 17 2 p p p p 75 40 65 70 0 0 0 -1 90
+67 Machoke Fighting None 2 0 187 167 134 112 123 106 BrickBreak DualChop KnockOff VitalThrow Fighting Dragon Dark Fighting 2 16 17 2 p p p p 75 40 65 70 0 0 0 -1 90
 68 Machamp Fighting None 2 0 197 200 145 128 150 117 BrickBreak DualChop Strength CrossChop Fighting Dragon Normal Fighting 2 16 1 2 p p p p 75 40 80 100 0 0 0 0 45
 69 Bellsprout Grass Poison 12 4 157 139 95 134 90 101 VineWhip Acid AcidSpray RazorLeaf Grass Poison Poison Grass 12 4 4 12 p s s p 45 40 40 55 0 0 0 0 255      
 70 Weepinbell Grass Poison 12 4 172 156 112 150 106 117 VineWhip Acid Venoshock GigaDrain Grass Poison Poison Grass 12 4 4 12 p s s s 45 40 65 75 0 0 0 0 120
