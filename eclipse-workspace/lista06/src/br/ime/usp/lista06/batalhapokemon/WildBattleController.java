@@ -570,7 +570,6 @@ public class WildBattleController extends Controller {
 		}
 		
 		while(dir != 'q') {
-			bc.t.setActivePokemon();
 			if(!bc.map.move(bc.t, dir)) {
 				System.out.println("This is not an available command! Select another one!");
 				dir = sc.next().charAt(0);
@@ -659,8 +658,6 @@ public class WildBattleController extends Controller {
 								System.out.println(bc.t.getName() + " blacked out!");
 								System.out.println(bc.t.getName() + " ushered to the nearest Pokemon Center, and was able to "
 												   + "recover all the fainted Pokemon back to full health...");
-								for(int i = 0; i < bc.t.getNumberOfPokemon(); i++)
-									bc.t.getPokemon(i).setCurrentHP(bc.t.getPokemon(i).getMaxHP());
 							}
 						}
 						
@@ -717,8 +714,6 @@ public class WildBattleController extends Controller {
 						
 						if(auxOpt1 == 'r') {
 							finished = true;
-							for(int i = 0; i < bc.t.getNumberOfPokemon(); i++)
-								bc.t.getPokemon(i).setCurrentHP(bc.t.getPokemon(i).getMaxHP());
 						}
 						
 						else if(auxOpt2 == 'r') {
