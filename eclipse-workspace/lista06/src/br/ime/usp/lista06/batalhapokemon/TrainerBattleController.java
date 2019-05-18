@@ -222,10 +222,10 @@ public class TrainerBattleController extends Controller {
 			
 			if(!comparesDouble(modifier, 0.0)) {
 				if(attack.hurtsUser(attack, attacker.getCurrentPokemon(), damage)) {
-					System.out.println(attacker.getCurrentPokemon() + " lost some of its HP due to recoil");
+					System.out.println(attacker.getCurrentPokemon().getName() + " lost some of its HP due to recoil");
 				}
 				if(attack.healsUser(attack, attacker.getCurrentPokemon(), damage)) {
-					System.out.println(attacker.getCurrentPokemon() + " restored some of its HP");
+					System.out.println(attacker.getCurrentPokemon().getName() + " restored some of its HP");
 				}
 			}
 		}
