@@ -327,7 +327,8 @@ public class TrainerBattleController extends Controller {
 			
 			System.out.println("Which pokemon should be healed?");
 			for(int i = 0; i < t.getNumberOfPokemon(); i++) {
-				System.out.println((i+1) + " " +  t.getPokemon(i).getName());
+				System.out.println((i+1) + " " +  t.getPokemon(i).getName() + " HP: " + t.getPokemon(i).getCurrentHP() 
+						+ "/" + t.getPokemon(i).getMaxHP());
 			}
 			
 			pokemon = getInt(sc);
