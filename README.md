@@ -159,7 +159,57 @@ Deve-se escolher o nome dos treinadores e os seus pokemons, os pokemons disponí
 
 77 Ponyta 
 
-78 Rapidash 
+78 Rapidash
+
+79 Slowpoke
+
+80 Slowbro
+
+81 Magnemite 
+
+82 Magneton 
+
+83 Farfetch'd
+
+84 Doduo
+
+85 Dodrio
+
+86 Seel
+
+87 Dewgong 
+
+88 Grimer
+
+89 Muk
+
+90 Shellder
+
+91 Cloyster
+
+92 Gastly
+
+93 Haunter
+
+94 Gengar
+
+95 Onix
+
+96 Drowzee
+
+97 Hypno
+
+98 Krabby
+
+99 Kingler
+
+100 Voltorb
+
+101 Electrode
+
+102 Exeggcute
+
+103 Exeggutor
 
 Cada pokémon tem um set de ataques diferentes, ataques mais fortes podem causar danos ao pokémon atacante. Cada treinador pode escolher sua ação durante as rodadas, os treinadores podem curar seus pokémons, trocá-los, atacar o inimigo ou fugir da batalha. A batalha acaba quando um dos treinadores fica sem pokémons ou foge da batalha.
 
