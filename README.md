@@ -137,7 +137,7 @@ Deve-se escolher o nome dos treinadores e os seus pokemons, os pokemons disponí
 
 66 Machop 
 
-67 Machocke 
+67 Machoke 
 
 68 Machamp 
 
